@@ -1,6 +1,6 @@
 {
-    "name": "vitelchat",
-    "short_name": "vitelchat",
+    "name": "vitel_chat",
+    "short_name": "vitel_chat",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

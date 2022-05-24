@@ -1,4 +1,4 @@
-# vitelchat
+# vitel_chat
 
 A new Flutter project.
 

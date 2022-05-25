@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 // import 'package:app_resources/src/Widgets/ToastCustom.dart';
-// import 'package:app_resources/src/helpers/SharedPreferences.dart';
+import 'package:vitel_chat/src/helpers/shared_preferences.dart';
+import 'package:vitel_chat/src/models/loginmovil_model.dart';
+import 'package:vitel_chat/src/models/operador_model.dart';
 // import 'package:app_resources/src/models/LoginMovil_model.dart';
-// import 'package:app_resources/src/services/Auth_service.dart';
+import 'package:vitel_chat/src/services/auth_service.dart';
 import 'package:vitel_chat/src/widgets/button_container.dart';
 import 'package:vitel_chat/src/widgets/textfield_passwordcontainer.dart';
 import 'package:vitel_chat/src/widgets/textfield_container.dart';
@@ -19,9 +21,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // AuthService? authProvider;
+  AuthService? authProvider = AuthService();
 
-  // final SharedPreference _sharedPreference = SharedPreference();
+  final SharedPreference _sharedPreference = SharedPreference();
 
   TextEditingController? emailController;
 
@@ -94,17 +96,12 @@ class _LoginPageState extends State<LoginPage> {
                     suffixIcon: Icons.visibility,
                     suffixIcon2: Icons.visibility_off),
               ),
-              // TextButton(
-              //   style: TextButton.styleFrom(
-              //     primary: Colors.blue,
-              //   ),
-              //   onPressed: () {},
-              //   child: Text('TextButton'),
-              // ),
               // Button Iniciar Sesion
               ButtonContainer(
                 text: "Iniciar Sesión",
-                // onPressed: () { _login(context); },
+                onPressed: () {
+                  _login(context);
+                },
               ),
               // Divisor
               SizeConfig.isMobilePortrait
@@ -140,38 +137,46 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // buildShowDialog(BuildContext context) => showDialog(
-  //   context: context,
-  //   barrierDismissible: false,
-  //   builder: (BuildContext context) => Center(
-  //     child: CircularProgressIndicator(),
-  //   )
-  // );
+  buildShowDialog(BuildContext context) => showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => Center(
+            child: CircularProgressIndicator(),
+          ));
 
-  // void _login(BuildContext context) async{
-  //   if(_formKey.currentState != null && _formKey.currentState!.validate()){
-  //     _formKey.currentState!.save();
-  //     buildShowDialog(context);
+  void _login(BuildContext context) async {
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      //buildShowDialog(context);
+      _sharedPreference.saveValueString(emailController!.text, email);
+      _sharedPreference.saveValueString(passwordController!.text, password);
 
-  //     String? token;
-  //     await _sharedPreference.returnValueString(TOKENMOVBILE).then((value) => token = value);
-  //     final login =  LoginMovilModel(
-  //       email: emailController!.text,
-  //       password: passwordController!.text,
-  //       tokenmovil: token,
-  //     );
+      // String? token;
+      // await _sharedPreference
+      //     .returnValueString(TOKENMOVBILE)
+      //     .then((value) => token = value);
+      //      debugPrint('debug: $token');
+      // final login = LoginMovilModel(
+      //   email: emailController!.text,
+      //   password: passwordController!.text,
+      //  // tokenmovil: "Token",
+      // );
+      final login = OperadorModel(
+        rfc: "CURP03",
+        nombre: "Bryan",
+        clave: "123",
+      );
+      bool resp = await authProvider!.login(login);
 
-  //     bool resp = await authProvider!.login(login);
-
-  //     if( resp ) {
-  //       Navigator.pop(context);
-  //       Navigator.pushReplacementNamed(context, '/home');
-  //     } else {
-  //       Navigator.pop(context);
-  //       FocusScope.of(context).requestFocus(new FocusNode());
-  //       // ToastCustom().getToastError(context);
-  //     }
-  //     return ;
-  //   }
-  // }
+      // if (resp) {
+      //   Navigator.pop(context);
+      //   Navigator.pushReplacementNamed(context, '/login');
+      // } else {
+      //   Navigator.pop(context);
+      //   FocusScope.of(context).requestFocus(new FocusNode());
+      //   //ToastCustom().getToastError(context);
+      // }
+      return;
+    }
+  }
 }

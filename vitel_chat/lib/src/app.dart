@@ -45,10 +45,10 @@ class _MyAppState extends State<MyApp> {
               // ChangeNotifierProvider(create: (_) => AuthService()),
             ],
             child: MaterialApp(
-              title: 'Grupo GIT',
+              title: 'VITEL',
               navigatorKey: navigatorKey,
               theme: ThemeData(
-                primaryColor: kSelectorColor,
+                primaryColor: kPrimaryColor,
               ),
               debugShowCheckedModeBanner: false,
               routes: {

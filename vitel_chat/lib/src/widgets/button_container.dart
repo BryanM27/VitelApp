@@ -31,7 +31,6 @@ class ButtonContainer extends StatelessWidget {
           splashColor: Colors.amber,
           color: Colors.white,
           onPressed: () {
-            print("Modulo " + text!);
             onPressed!();
           },
         ),

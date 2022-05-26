@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:vitel_chat/src/pages/auth_login.dart';
+import 'package:vitel_chat/src/pages/licencia_page.dart';
 
 import 'global/constants.dart';
 import 'package:vitel_chat/src/pages/auth_login.dart';
@@ -54,7 +55,7 @@ class _MyAppState extends State<MyApp> {
               routes: {
                 '/': (BuildContext context) => LandingPage(),
                 '/login': (BuildContext context) => LoginPage(),
-                // '/home': (BuildContext context) => HomePage(),
+                '/home': (BuildContext context) => HomePage(),
                 // '/password': (BuildContext context) => RecoveryPassword(),
               },
             ),

@@ -32,7 +32,8 @@ const LOGGEDIN = "LoggedIn";
 
 //Colors
 const kPrimaryColor = Color.fromRGBO(3, 103, 166, 1.0);
-const kSelectorColor = Color.fromRGBO(3, 139, 225, 0.8);
+//const kSelectorColor = Color.fromRGBO(3, 139, 225, 0.8);
+const kSelectorColor = Color.fromARGB(204, 85, 176, 233);
 const kTextfieldColor = Color.fromRGBO(255, 255, 255, 1.0);
 const kButtonColor = Color.fromRGBO(255, 255, 255, 1.0);
 const kDividerColor = Color.fromRGBO(255, 255, 255, 1.0);

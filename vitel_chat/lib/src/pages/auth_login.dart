@@ -148,35 +148,26 @@ class _LoginPageState extends State<LoginPage> {
   void _login(BuildContext context) async {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      //buildShowDialog(context);
+      buildShowDialog(context);
       _sharedPreference.saveValueString(emailController!.text, email);
       _sharedPreference.saveValueString(passwordController!.text, password);
 
-      // String? token;
-      // await _sharedPreference
-      //     .returnValueString(TOKENMOVBILE)
-      //     .then((value) => token = value);
-      //      debugPrint('debug: $token');
       final login = LoginMovilModel(
         email: emailController!.text,
         password: passwordController!.text,
         // tokenmovil: "Token",
       );
-      // final login = OperadorModel(
-      //   rfc: "CURP03",
-      //   nombre: "Bryan",
-      //   clave: "123",
-      // );
+
       bool resp = await authProvider!.login(login);
 
-      // if (resp) {
-      //   Navigator.pop(context);
-      //   Navigator.pushReplacementNamed(context, '/login');
-      // } else {
-      //   Navigator.pop(context);
-      //   FocusScope.of(context).requestFocus(new FocusNode());
-      //   //ToastCustom().getToastError(context);
-      // }
+      if (resp) {
+        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacementNamed('/home');
+      } else {
+        Navigator.pop(context);
+        FocusScope.of(context).requestFocus(new FocusNode());
+        //ToastCustom().getToastError(context);
+      }
       return;
     }
   }

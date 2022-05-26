@@ -4,23 +4,20 @@ AuthenticateMovilModel authenticateMovilModelFromJson(String str) =>
     AuthenticateMovilModel.fromJson(json.decode(str));
 
 class AuthenticateMovilModel {
-  final int? userid;
-  final int? resourcedataid;
+  final String? email;
+  final String? password;
   final int? roleid;
-  final bool? status;
+  final bool? accesstoken;
 
   AuthenticateMovilModel({
-    this.userid,
-    this.resourcedataid,
+    this.email,
+    this.password,
     this.roleid,
-    this.status,
+    this.accesstoken,
   });
 
   factory AuthenticateMovilModel.fromJson(Map<String, dynamic> json) =>
       new AuthenticateMovilModel(
-        userid: json['id'],
-        resourcedataid: json['resourcedataid'],
-        roleid: json['roleid'],
-        status: json['Status'],
+        accesstoken: json['access_token'],
       );
 }

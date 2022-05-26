@@ -7,17 +7,13 @@ String loginMovilModelToJson(LoginMovilModel data) =>
 class LoginMovilModel {
   final String? email;
   final String? password;
-  final String? tokenmovil;
+  final String? token;
 
-  LoginMovilModel({
-    this.email,
-    this.password,
-    this.tokenmovil,
-  });
+  LoginMovilModel({this.email, this.password, this.token});
 
   Map<String, dynamic> toJson() => {
         "email": email,
         "password": password,
-        "tokenmovil": tokenmovil,
+        "token": token,
       };
 }

@@ -2,10 +2,10 @@ import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:vitel_chat/src/pages/home.dart';
+import 'package:vitel_chat/src/pages/auth_login.dart';
 
 import 'global/constants.dart';
-import 'package:vitel_chat/src/pages/home.dart';
+import 'package:vitel_chat/src/pages/auth_login.dart';
 import 'package:vitel_chat/src/pages/landing_page.dart';
 import 'package:vitel_chat/src/services/user_services.dart';
 

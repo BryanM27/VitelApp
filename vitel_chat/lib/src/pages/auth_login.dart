@@ -70,7 +70,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     Container(
-                      child: SvgPicture.asset('assets/images/VITEL_LOGO.svg'),
+                      child:
+                          SvgPicture.asset('assets/images/logo_text_git.svg'),
                     ),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -114,22 +115,22 @@ class _LoginPageState extends State<LoginPage> {
                     )
                   : Text(""),
               //Recuperar contraseña
-              Container(
-                margin: SizeConfig.isMobilePortrait
-                    ? EdgeInsets.only(bottom: 50)
-                    : EdgeInsets.zero,
-                child: InkWell(
-                  onTap: () => Navigator.pushNamed(context, '/password'),
-                  child: Text(
-                    "¿Se te olvidó tu contraseña?",
-                    style: TextStyle(
-                      color: kTextWhiteColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                    ),
-                  ),
-                ),
-              )
+              // Container(
+              //   margin: SizeConfig.isMobilePortrait
+              //       ? EdgeInsets.only(bottom: 50)
+              //       : EdgeInsets.zero,
+              //   child: InkWell(
+              //     onTap: () => Navigator.pushNamed(context, '/password'),
+              //     child: Text(
+              //       "¿Se te olvidó tu contraseña?",
+              //       style: TextStyle(
+              //         color: kTextWhiteColor,
+              //         fontWeight: FontWeight.bold,
+              //         fontSize: 15.0,
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         )),
@@ -156,16 +157,16 @@ class _LoginPageState extends State<LoginPage> {
       //     .returnValueString(TOKENMOVBILE)
       //     .then((value) => token = value);
       //      debugPrint('debug: $token');
-      // final login = LoginMovilModel(
-      //   email: emailController!.text,
-      //   password: passwordController!.text,
-      //  // tokenmovil: "Token",
-      // );
-      final login = OperadorModel(
-        rfc: "CURP03",
-        nombre: "Bryan",
-        clave: "123",
+      final login = LoginMovilModel(
+        email: emailController!.text,
+        password: passwordController!.text,
+        // tokenmovil: "Token",
       );
+      // final login = OperadorModel(
+      //   rfc: "CURP03",
+      //   nombre: "Bryan",
+      //   clave: "123",
+      // );
       bool resp = await authProvider!.login(login);
 
       // if (resp) {

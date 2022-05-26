@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/app.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/pages/fragments/register_license.dart';
+import 'package:vitel_chat/src/services/cartaporte_services.dart';
 
 import '../global/constants.dart';
 import '../global/size_config.dart';
@@ -35,6 +36,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   setStatePage(int index) => setState(() => _page = index);
+  final ButtonStyle style =
+      ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
   Widget _homeWidget() => Container(
         child: Container(
@@ -43,6 +46,20 @@ class _HomePageState extends State<HomePage> {
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(6.0)),
             color: Colors.grey.shade300,
+          ),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ElevatedButton(
+                  style: style,
+                  onPressed: () {
+                    getCartaporte();
+                  },
+                  child: const Text('Enviar'),
+                ),
+              ],
+            ),
           ),
         ),
       );

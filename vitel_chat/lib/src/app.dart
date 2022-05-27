@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:vitel_chat/src/pages/auth_login.dart';
+import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/licencia_page.dart';
 
 import 'global/constants.dart';
@@ -43,7 +44,7 @@ class _MyAppState extends State<MyApp> {
               // ChangeNotifierProvider(create: (_) => ChecksService()),
               // ChangeNotifierProvider(create: (_) => BinnacleService()),
               ChangeNotifierProvider(create: (_) => UserService()),
-              // ChangeNotifierProvider(create: (_) => AuthService()),
+              //ChangeNotifierProvider(create: (_) => getCartaporte()),
             ],
             child: MaterialApp(
               title: 'VITEL',
@@ -56,6 +57,7 @@ class _MyAppState extends State<MyApp> {
                 '/': (BuildContext context) => LandingPage(),
                 '/login': (BuildContext context) => LoginPage(),
                 '/home': (BuildContext context) => HomePage(),
+                '/details': (BuildContext context) => DetailCartaPorter(),
                 // '/password': (BuildContext context) => RecoveryPassword(),
               },
             ),

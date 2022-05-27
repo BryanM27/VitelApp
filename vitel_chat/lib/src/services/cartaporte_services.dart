@@ -32,12 +32,13 @@ Future<bool> getCartaporte() async {
   // debugPrint('Response status getRol: ${response.statusCode}');
   // debugPrint('Response status getRol: ${response.body}');
   // debugPrint('Response body getRol: $tokens');
-
-  String arrayObjsText = response.body.toString();
-  var tagObjsJson = jsonDecode(arrayObjsText)['Data'] as List;
-  List<Tag> tagObjs =
-      tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
-  debugPrint('prueba de objetos ${tagObjs}');
+  //var tagObjsJson = jsonDecode(response.body)['Data'] as List;
+  String dec = response.body;
+  var tagObjsJson = jsonDecode(dec)['Data'];
+  final decode = cartaResponseToJson(tagObjsJson);
+  // List<Tag> tagObjs =
+  //     tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
+  debugPrint('prueba de objetos ${decode.cartaporte?[0].idcartaporte}');
 
   if (response.statusCode != 200) {
     return false;
@@ -54,13 +55,4 @@ Future<bool> getCartaporte() async {
 
   // notifyListeners();
   return true;
-}
-
-class Tag {
-  int idempresa;
-  String clientid;
-  Tag(this.idempresa, this.clientid);
-  factory Tag.fromJson(dynamic json) {
-    return Tag(json['IDEmpresa'] as int, json['ClientID'] as String);
-  }
 }

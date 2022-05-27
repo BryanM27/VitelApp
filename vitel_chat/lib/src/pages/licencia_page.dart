@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/app.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/pages/fragments/register_license.dart';
+import 'package:vitel_chat/src/pages/listOperadores_page.dart';
 import 'package:vitel_chat/src/services/cartaporte_services.dart';
 
 import '../global/constants.dart';
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   int _page = 0;
 
   SharedPreference _sharedPreference = SharedPreference();
+  TextEditingController? licenciaController;
 
   GlobalKey<ScaffoldState> mScaffoldState = GlobalKey<ScaffoldState>();
   GlobalKey bottomNavigationBar = GlobalKey();
@@ -26,9 +28,11 @@ class _HomePageState extends State<HomePage> {
     switch (actuallyPage) {
       case 0:
         return _homeWidget();
+      // case 1:
+      //   return RegisterLicense();
       case 1:
-        return RegisterLicense();
-      case 4:
+        return ListOperadores();
+      case 2:
         return Container();
       default:
         return _homeWidget();
@@ -39,10 +43,11 @@ class _HomePageState extends State<HomePage> {
   final ButtonStyle style =
       ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
-  Widget _homeWidget() => Container(
+  Widget _homeWidget() => Center(
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-          height: 130.0,
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+          height: 160.0,
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(6.0)),
             color: Colors.grey.shade300,
@@ -51,6 +56,15 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                Text(
+                    'Para poder ver sus cartas porte asignadas, es necesario que ingrese su No. de licencia.'),
+                TextFormField(
+                  controller: licenciaController,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Numero de licencia',
+                  ),
+                ),
                 ElevatedButton(
                   style: style,
                   onPressed: () {
@@ -149,8 +163,8 @@ class _HomePageState extends State<HomePage> {
           height: 50.0,
           backgroundColor: Color.fromRGBO(1, 55, 89, 35),
           items: <Widget>[
-            Icon(Icons.list, size: 30),
             Icon(Icons.home, size: 30),
+            Icon(Icons.list, size: 30),
             Icon(Icons.account_circle, size: 30),
             Icon(Icons.exit_to_app, size: 30),
           ],

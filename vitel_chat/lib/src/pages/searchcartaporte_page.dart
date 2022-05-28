@@ -16,12 +16,12 @@ import 'package:provider/provider.dart';
 
 import '../global/constants.dart';
 
-class ListOperadores extends StatefulWidget {
+class SearchCartaPorte extends StatefulWidget {
   @override
-  _ListOperadores createState() => _ListOperadores();
+  _SearchCartaPorte createState() => _SearchCartaPorte();
 }
 
-class _ListOperadores extends State<ListOperadores> {
+class _SearchCartaPorte extends State<SearchCartaPorte> {
   //AuthService? authProvider = AuthService();
 
   final SharedPreference _sharedPreference = SharedPreference();
@@ -41,7 +41,7 @@ class _ListOperadores extends State<ListOperadores> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: Text('Carta Porte'),
+        title: Text('Listado de cartaportes'),
       ), //AppBar
       body: Container(
         padding: EdgeInsets.only(top: 15, bottom: 15),
@@ -55,12 +55,10 @@ class _ListOperadores extends State<ListOperadores> {
           itemBuilder: (context, index) {
             return ListTile(
               leading: FlutterLogo(),
-              title: Text('Carta Porte $index'),
+              title: Text('row $index'),
               subtitle: Text('Empresa $index'),
               onTap: () {
-                // setState(() {
-                //   _Page = 3;
-                // });
+                Navigator.pushReplacementNamed(context, '/details');
                 debugPrint("On tap $index");
               },
             );

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/app.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/pages/fragments/register_license.dart';
-import 'package:vitel_chat/src/pages/listOperadores_page.dart';
+import 'package:vitel_chat/src/pages/listcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 import 'package:vitel_chat/src/services/cartaporte_services.dart';
 
@@ -35,8 +35,8 @@ class _HomePageState extends State<HomePage> {
         return ListOperadores();
       case 2:
         return Container();
-      case 3:
-        return SearchCartaPorte();
+      // case 3:
+      //   return SearchCartaPorte();
       default:
         return _homeWidget();
     }

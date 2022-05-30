@@ -59,6 +59,7 @@ class _MyAppState extends State<MyApp> {
                 '/login': (BuildContext context) => LoginPage(),
                 '/home': (BuildContext context) => HomePage(),
                 '/details': (BuildContext context) => SearchCartaPorte(),
+                '/carta': (BuildContext context) => DetailCartaPorte(),
                 // '/password': (BuildContext context) => RecoveryPassword(),
               },
             ),

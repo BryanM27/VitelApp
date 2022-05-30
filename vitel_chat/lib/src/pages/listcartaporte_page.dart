@@ -7,6 +7,7 @@ import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/models/loginmovil_model.dart';
 import 'package:vitel_chat/src/models/operador_model.dart';
 import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
+import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 // import 'package:app_resources/src/models/LoginMovil_model.dart';
 import 'package:vitel_chat/src/services/auth_service.dart';
 import 'package:vitel_chat/src/widgets/button_container.dart';
@@ -39,37 +40,39 @@ class _ListOperadores extends State<ListOperadores> {
     final int viewCount;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        title: Text('Carta Porte'),
-      ), //AppBar
-      body: Container(
-        padding: EdgeInsets.only(top: 15, bottom: 15),
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-        child: ListView.separated(
-          shrinkWrap: true,
-          padding: EdgeInsets.all(10),
-          itemCount: 15,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: FlutterLogo(),
-              title: Text('Carta Porte $index'),
-              subtitle: Text('Empresa $index'),
-              onTap: () {
-                // setState(() {
-                //   _Page = 3;
-                // });
-                debugPrint("On tap $index");
-              },
-            );
-          },
-          separatorBuilder: (context, index) {
-            return Divider();
-          },
-        ),
-      ), // center
-    );
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+          title: Text('Carta Porte'),
+        ), //AppBar
+        body: Container(
+          padding: EdgeInsets.only(top: 15, bottom: 15),
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          child: ListView.separated(
+            shrinkWrap: true,
+            padding: EdgeInsets.all(10),
+            itemCount: 15,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: FlutterLogo(),
+                title: Text('Carta Porte $index'),
+                subtitle: Text('Empresa $index'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (ctxt) => new DetailCartaPorte()),
+                  );
+                  debugPrint("On tap $index");
+                },
+              );
+            },
+            separatorBuilder: (context, index) {
+              return Divider();
+            },
+          ),
+        ) // center
+        );
   }
 }

@@ -1,17 +1,12 @@
 import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-// import 'package:app_resources/src/Widgets/ToastCustom.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/models/loginmovil_model.dart';
-import 'package:vitel_chat/src/models/operador_model.dart';
-// import 'package:app_resources/src/models/LoginMovil_model.dart';
 import 'package:vitel_chat/src/services/auth_service.dart';
 import 'package:vitel_chat/src/widgets/button_container.dart';
 import 'package:vitel_chat/src/widgets/textfield_passwordcontainer.dart';
 import 'package:vitel_chat/src/widgets/textfield_container.dart';
-import 'package:provider/provider.dart';
 
 import '../global/constants.dart';
 

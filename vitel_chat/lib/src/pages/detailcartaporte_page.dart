@@ -131,6 +131,29 @@ class DetailCartaPorte extends StatelessWidget {
                         info: "No hay información",
                         // info: "${user!.cellphone != "" ? user!.cellphone : "No hay información."}", EJEMPLO MAPEO
                       ),
+                      Row(
+                        children: const <Widget>[
+                          //Item 2/4
+                          Expanded(
+                            child: Center(
+                              child: TextBoldContainer(
+                                title: "Placas",
+                                info: "No hay información",
+                                // info: "${user!.cellphone != "" ? user!.cellphone : "No hay información."}", EJEMPLO MAPEO
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Center(
+                              child: TextBoldContainer(
+                                title: "Modelo",
+                                info: "No hay información",
+                                // info: "${user!.cellphone != "" ? user!.cellphone : "No hay información."}", EJEMPLO MAPEO
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       const TextBoldContainer(
                         title: "Número de póliza",
                         info: "No hay información",

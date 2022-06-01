@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-CartaModelResp cartaResponseToJson(List str) => CartaModelResp.fromJson(str);
+CartaModelResp cartaResponseToJson(List str, int id) =>
+    CartaModelResp.fromJson((str[id]));
 
 class CartaModelResp {
   final int? idempresa;
@@ -16,7 +17,7 @@ class CartaModelResp {
     this.cartaporte,
   });
 
-  factory CartaModelResp.fromJson(dynamic json) => new CartaModelResp(
+  factory CartaModelResp.fromJson(dynamic json) => CartaModelResp(
         idempresa: json['IDempresa'],
         clienteid: json['Clienteid'],
         nombre: json['Nombre'],

@@ -1,7 +1,7 @@
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
-import '../global/constants.dart';
+import '../../global/constants.dart';
 
 class LandingPage extends StatefulWidget {
   LandingPage({Key? key}) : super(key: key);

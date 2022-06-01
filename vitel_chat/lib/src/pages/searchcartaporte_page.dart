@@ -18,6 +18,10 @@ import 'package:provider/provider.dart';
 import '../global/constants.dart';
 
 class SearchCartaPorte extends StatefulWidget {
+  final int? _Page = 0;
+  const SearchCartaPorte({
+    Key? key,
+  }) : super(key: key);
   @override
   _SearchCartaPorte createState() => _SearchCartaPorte();
 }
@@ -27,45 +31,35 @@ class _SearchCartaPorte extends State<SearchCartaPorte> {
 
   final SharedPreference _sharedPreference = SharedPreference();
 
-  validator() {
-    // print(_formKey.currentState!.validate());
-
-    // if(!_formKey.currentState!.validate()) return;
-
-    // _formKey.currentState!.save();
-  }
   @override
   Widget build(BuildContext context) {
-    // backing data
-    final int viewCount;
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
-          title: Text('Listado de cartaportes'),
+          title: const Text('Listado de cartaportes'),
         ), //AppBar
         body: Container(
-          padding: EdgeInsets.only(top: 15, bottom: 15),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.only(top: 15, bottom: 15),
+          decoration: const BoxDecoration(
             color: Colors.white,
           ),
           child: ListView.separated(
             shrinkWrap: true,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             itemCount: 15,
             itemBuilder: (context, index) {
               return ListTile(
-                leading: FlutterLogo(),
-                title: Text('Carta Porte $index'),
-                subtitle: Text('Empresa $index'),
+                trailing: const Text('Fecha'),
+                leading: const FlutterLogo(),
+                title: Text('CP- $index'),
+                subtitle: Text('tipo $index' ' | ' 'Estatus' ' $index'),
                 onTap: () {
-                  Navigator.pop(context);
-                  debugPrint("On tap $index");
+                  setState(() {});
                 },
               );
             },
             separatorBuilder: (context, index) {
-              return Divider();
+              return const Divider();
             },
           ),
         ) // center

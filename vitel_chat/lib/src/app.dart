@@ -4,12 +4,12 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:vitel_chat/src/pages/auth_login.dart';
 import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
-import 'package:vitel_chat/src/pages/licencia_page.dart';
+import 'package:vitel_chat/src/pages/home_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 
 import 'global/constants.dart';
 import 'package:vitel_chat/src/pages/auth_login.dart';
-import 'package:vitel_chat/src/pages/landing_page.dart';
+import 'package:vitel_chat/src/pages/fragments/landing_page.dart';
 import 'package:vitel_chat/src/services/user_services.dart';
 
 class MyApp extends StatefulWidget {

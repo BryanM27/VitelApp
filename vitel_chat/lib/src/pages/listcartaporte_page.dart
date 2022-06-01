@@ -1,3 +1,4 @@
+//import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,10 +7,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/models/loginmovil_model.dart';
 import 'package:vitel_chat/src/models/operador_model.dart';
+import 'package:vitel_chat/src/models/response/cartaporte_model.dart';
 import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 // import 'package:app_resources/src/models/LoginMovil_model.dart';
 import 'package:vitel_chat/src/services/auth_service.dart';
+import 'package:vitel_chat/src/services/cartaporte_services.dart';
 import 'package:vitel_chat/src/widgets/button_container.dart';
 import 'package:vitel_chat/src/widgets/textfield_passwordcontainer.dart';
 import 'package:vitel_chat/src/widgets/textfield_container.dart';
@@ -19,57 +22,78 @@ import '../global/constants.dart';
 
 class ListOperadores extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _ListOperadores createState() => _ListOperadores();
 }
 
 class _ListOperadores extends State<ListOperadores> {
-  //AuthService? authProvider = AuthService();
+  // final RefreshController _refreshController =
+  //     RefreshController(initialRefresh: false);
+  CartaModelResp? carta;
 
-  final SharedPreference _sharedPreference = SharedPreference();
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _getCartaporte();
+  // }
 
-  validator() {
-    // print(_formKey.currentState!.validate());
+  // void _onRefresh() async {
+  //   // monitor network fetch
+  //   await Future.delayed(Duration(milliseconds: 1000));
+  //   // if failed,use refreshFailed()
+  //   _getCartaporte();
+  //   _refreshController.refreshCompleted();
+  // }
 
-    // if(!_formKey.currentState!.validate()) return;
+  // void _onLoading() async {
+  //   // monitor network fetch
+  //   await Future.delayed(Duration(milliseconds: 1000));
+  //   // if failed,use loadFailed(),if no data return,use LoadNodata()
+  //   _refreshController.loadComplete();
+  // }
 
-    // _formKey.currentState!.save();
-  }
+  // void _getCartaporte() async {
+  //   final SharedPreference _sharedPreference = SharedPreference();
+  //   //int id = await _sharedPreference.returnValueInt(USERID);
+  //   await getCartaporte();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    // backing data
-    final int viewCount;
-
+    // carta == Provider.of<CartaModelResp>(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
           title: Text('Carta Porte'),
         ), //AppBar
         body: Container(
-          padding: EdgeInsets.only(top: 15, bottom: 15),
+          padding: const EdgeInsets.only(top: 15, bottom: 15),
           decoration: BoxDecoration(
             color: Colors.white,
           ),
           child: ListView.separated(
             shrinkWrap: true,
-            padding: EdgeInsets.all(10),
-            itemCount: 15,
+            padding: const EdgeInsets.all(10),
+            itemCount: 1,
             itemBuilder: (context, index) {
               return ListTile(
-                leading: FlutterLogo(),
-                title: Text('Carta Porte $index'),
+                leading: const FlutterLogo(),
+                trailing: Text('$index'),
+                title:
+                    Text('Carta Porte ${carta?.cartaporte?[0].idcartaporte}'),
                 subtitle: Text('Empresa $index'),
                 onTap: () {
                   Navigator.push(
                     context,
-                    new MaterialPageRoute(
-                        builder: (ctxt) => new DetailCartaPorte()),
+                    MaterialPageRoute(
+                        builder: (ctxt) => const DetailCartaPorte()),
                   );
                   debugPrint("On tap $index");
                 },
               );
             },
             separatorBuilder: (context, index) {
-              return Divider();
+              return const Divider();
             },
           ),
         ) // center

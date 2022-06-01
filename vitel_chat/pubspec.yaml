@@ -43,6 +43,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   ui_helper: ^1.1.0
   dio: ^4.0.6
+  pull_to_refresh: ^2.0.0
 
 dev_dependencies:
   flutter_test:

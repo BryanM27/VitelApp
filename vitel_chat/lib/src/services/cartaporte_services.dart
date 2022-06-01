@@ -1,27 +1,19 @@
 import 'dart:collection';
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:vitel_chat/src/models/operador_model.dart';
 import 'package:vitel_chat/src/models/response/cartaporte_model.dart';
-import 'package:vitel_chat/src/models/response/loginresponse_model.dart';
-import 'package:vitel_chat/src/services/token.dart';
 import '../global/constants.dart';
-import 'package:vitel_chat/src/models/loginmovil_model.dart';
-import 'package:vitel_chat/src/helpers/shared_preferences.dart';
-import 'package:vitel_chat/src/models/authenticatemovil_model.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 
 Future<bool> getCartaporte() async {
   final SharedPreference _sharedPreference = SharedPreference();
   // String tokens = await _sharedPreference.returnValueString(TOKENMOVIL);
   String tokens =
-      "HgGqwb3x-VjTaqZopBuOlwoYp99oHG8uCapofzOVSavzgDTrdjTJNQYmLnRq4pycRmhlZ-Hg6GwLrU1RfWURHi57nArlgAp9viy9HvygLrotawa5Hn4b7aBRZjF44yWTyZnbTBdEwB27c-X37aXtKolSwwPYBpL6Jwxvrn-3lSYzMdDZXSG5iJ2u4-JKcywpXYiT8LDEfiZN101bTxIgS6E2Aa1k8BjMVJ2IBILLV2qnCLHmeLv_QXc_MUKidzTiouz2iEkVMpgK9oSuUIVh8ZZ-qSBNVKCwTRznG6wPsA6tOxHA69AVb4KcB5och1Mq3EmfgUpF80bifAc8C8-GS9qSNor6pfSRXySPoucyHK2kYe6I9eN267m-8i3pZZxfHuXwOJ1V5JMdkL3oFDWwfTnORVAWno3KlbDF8ljTiieVqpiXR9rbVhcvYyvN5Iv_UWyrqaH5JgmhqZJxneKrJi429YIpvTvNKx90T8e1HUPfA4wHD1_nMUhFtmtFtTu2oC8sg6ME15NDeicbXqum932vjbJBZpEKg9A5ttj0_cYbF92bBHPfwcfPFOGrrZd9ef986Zi4g2dz5KRNfgA2r3i2tSc1dSlbGrM7asupFbNERikvNGsv778_LtjtECqfabx4dT-ebhoI6danC6qW37RWza1vwYJKibPfFavRJmEK4NwFZ71J4Ky0LCfQhq2jYFiZO1AGXyJgOaEB7KqzJ53IoKtHXcij5h521K8SybbbpypAh7L33VGEp68hBWcgJIPaAZS7Ru2Lm_GueAM2LQGzZq09nmW6qtePiwyVQFf6a6e7kwx6iUDBu0o50nACCT2Xim3gaX_OuJvR6WnalIE9GdGvxUGHX98q2B802k6l7i6S1-SRyJ_AwvkRd9L2";
-
+      "iPwOXbclBjLJGLjD5MmexRkEHwFbJzzbNaLpw3hu-YmAsVSM4H8Ea7dI-Rgv4W1DjyXkkD9t52mivXx4NBDQimeEC309c6LURTeOtvvQ_GnwICKEQKuSxjRDyStO0Jsa8sXTcBD1phGQ70-hnQ9tkuE38gRZ51IRe0Sa3Y_-wDwmH9xehKTvJC7x7fbQVQvbC7cQq_DGONMxrpc1_4UDliVkp3qwKAXaP7SSGqXDtXX0dJKfZ1qF37j8u9qGRXH3L4ChjXO9J0l0y3tGSUWLHkLwV9tHHjI0LZOHxQ5hSZfoQw5LOj9iAcqLdrTozaE-5jqB-jiRdqQCy8oZuJcjPFMRf9raL7cj6GqdPkpPd-JKfyMYA-J1Ubjs8Gwi5J1z9GvxnE1HzbOCa64M1bYhH7r1DrJjzIeVW0wKhx1dceIB9hqUC4cGjLYfmRMUUFcTUmk5FLAbAfP93_v1QKMv0AfAiwdC-OF-w1OYy_hDa5dunnFhfyo9c0CVv_vTEyPjBZFLP1cyirgo8rp68RDGcpeJNqJICnlLhmKcno5-BDxuOov_-BO7iNYa6Voi8pMgx4XgPzR3TCAwFoS5KIk1c67BHnyqxh-wdRMsSvg8VCTZ0WOMYoTPXsxrJBjX9sWaHwK8gIec2nbyih7Vf3WPepB1ocQ3OQl5LocWXmxwaz-mkMWyIQz0OhSt1_EKdN6rd2PfXJ-yzTNMk7qvUZj4vFEuzJNx8MJp-n4BihPuoj7UyVCn3kB6XlHkuwouJt04OY0a4W1kiOv5woRN6KPjZNJx5s4ofWqzt4uNYfl2Kkv1PaUp71ZafBFuKtSj8ITF4NTyI3cTGoESsXn0mskRxhVLJNY1neTvExPEQrGicKOevW6Ugn6mgisUwan8sIIq";
   final response = await http.get(
-      Uri.parse(url +
-          'API/CartaPorteMovil/GetCartasPorteOperador?NoLicencia=6519681'),
+      Uri.parse(
+          '${url}API/CartaPorteMovil/GetCartasPorteOperador?NoLicencia=6519681'),
       //  body: "RFC:",
       headers: {
         'Content-Type': 'application/json',
@@ -29,13 +21,10 @@ Future<bool> getCartaporte() async {
         'Authorization': 'Bearer $tokens',
       });
 
-  // debugPrint('Response status getRol: ${response.statusCode}');
-  // debugPrint('Response status getRol: ${response.body}');
-  // debugPrint('Response body getRol: $tokens');
-  //var tagObjsJson = jsonDecode(response.body)['Data'] as List;
-  String dec = response.body;
+  debugPrint('prueba de objetos ${response.body}');
+  final dec = response.body;
   var tagObjsJson = jsonDecode(dec)['Data'];
-  final decode = cartaResponseToJson(tagObjsJson);
+  final decode = cartaResponseToJson(tagObjsJson, 0);
   // List<Tag> tagObjs =
   //     tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
   debugPrint('prueba de objetos ${decode.cartaporte?[0].idcartaporte}');
@@ -43,16 +32,6 @@ Future<bool> getCartaporte() async {
   if (response.statusCode != 200) {
     return false;
   }
-  //debugPrint('debug Operador: ${decodedData.idempresa}');
-  // print(decodedData.resourcedataid);
-  // print(decodedData.roleid);
-  // print(decodedData.status);
-  // _sharedPreference.saveValueInt(decodedData.userid!, USERID);
-  // _sharedPreference.saveValueInt(decodedData.resourcedataid!, RESOURCEDATAID);
-  // _sharedPreference.saveValueInt(decodedData.roleid!, ROLEID);
-  // _sharedPreference.saveValueBoolean(decodedData.status!, USERSTATUS);
-  // _sharedPreference.saveValueBoolean(true, LOGGEDIN);
 
-  // notifyListeners();
   return true;
 }

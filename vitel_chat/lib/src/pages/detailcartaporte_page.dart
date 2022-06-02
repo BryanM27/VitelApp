@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/global/constants.dart';
+import 'package:vitel_chat/src/models/response/prueba.dart';
 import 'package:vitel_chat/src/widgets/doublerow_container.dart';
 import 'package:vitel_chat/src/widgets/textbold_container.dart';
 
-class DetailCartaPorte extends StatelessWidget {
-  //final UserModel? user;
-  const DetailCartaPorte({
-    Key? key,
-    //this.user,
-  }) : super(key: key);
+class DetailCartaPorte extends StatefulWidget {
+  final CartaModel? values;
 
+  DetailCartaPorte({
+    Key? key,
+    required this.values,
+  }) : super(key: key);
+  @override
+  _DetailCartaPorte createState() => _DetailCartaPorte();
+}
+
+class _DetailCartaPorte extends State<DetailCartaPorte> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: const Text('Detalles cartaporte'),
+        title: const Text('Detalles cartaporte '),
       ),
       body: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           Container(
-            width: 100,
+            constraints: const BoxConstraints(minWidth: 100, maxWidth: 200),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(6.0)),
               color: Colors.grey.shade300,
@@ -32,8 +39,14 @@ class DetailCartaPorte extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.symmetric(
                       vertical: 8.0, horizontal: 10.0),
-                  child: const Center(
-                    child: Text('CP-CARTAPORTE'),
+                  child: Center(
+                    child: Text(
+                      '${widget.values?.folio}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
                 Column(
@@ -44,7 +57,7 @@ class DetailCartaPorte extends StatelessWidget {
                         Expanded(
                           child: Container(
                             padding: const EdgeInsets.all(30),
-                            child: const CircleAvatar(
+                            child: CircleAvatar(
                               backgroundImage:
                                   AssetImage('assets/images/xmlimage.jpg'),
                               radius: 40,
@@ -72,9 +85,9 @@ class DetailCartaPorte extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const TextBoldContainer(
+                          TextBoldContainer(
                             title: "Cliente",
-                            info: "No hay información",
+                            info: '${widget.values?.rfcclienteproovedor}',
                           ),
                           const TextBoldContainer(
                             title: "Fecha de inicio",
@@ -97,19 +110,19 @@ class DetailCartaPorte extends StatelessWidget {
                                   ),
                                 ]),
                           ),
-                          const TextBoldContainer(
+                          TextBoldContainer(
                             title: "Tipo Transporte",
                             info: "No hay información",
                             // info: "${user!.cellphone != "" ? user!.cellphone : "No hay información."}", EJEMPLO MAPEO
                           ),
                           Row(
-                            children: const <Widget>[
+                            children: <Widget>[
                               //Item 2/4
                               Expanded(
                                 child: Center(
                                   child: TextBoldContainer(
                                     title: "Placas",
-                                    info: "No hay información",
+                                    info: '${widget.values?.placasvehiculo}',
                                     // info: "${user!.cellphone != "" ? user!.cellphone : "No hay información."}", EJEMPLO MAPEO
                                   ),
                                 ),
@@ -118,7 +131,7 @@ class DetailCartaPorte extends StatelessWidget {
                                 child: Center(
                                   child: TextBoldContainer(
                                     title: "Modelo",
-                                    info: "No hay información -------",
+                                    info: '${widget.values?.modelovehiculo}',
                                     // info: "${user!.cellphone != "" ? user!.cellphone : "No hay información."}", EJEMPLO MAPEO
                                   ),
                                 ),
@@ -131,7 +144,7 @@ class DetailCartaPorte extends StatelessWidget {
                             // info: "${user!.cellphone != "" ? user!.cellphone : "No hay información."}", EJEMPLO MAPEO
                           ),
                           Row(
-                            children: const <Widget>[
+                            children: <Widget>[
                               //Item 2/4
                               Expanded(
                                 child: Center(
@@ -146,7 +159,7 @@ class DetailCartaPorte extends StatelessWidget {
                                 child: Center(
                                   child: TextBoldContainer(
                                     title: "Nombre Asegurado",
-                                    info: "No hay información ",
+                                    info: '${widget.values?.aseguradora}',
                                     // info: "${user!.cellphone != "" ? user!.cellphone : "No hay información."}", EJEMPLO MAPEO
                                   ),
                                 ),

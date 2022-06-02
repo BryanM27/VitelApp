@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/models/loginmovil_model.dart';
 import 'package:vitel_chat/src/models/operador_model.dart';
+import 'package:vitel_chat/src/models/response/prueba.dart';
 import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 // import 'package:app_resources/src/models/LoginMovil_model.dart';
@@ -14,23 +15,19 @@ import 'package:vitel_chat/src/widgets/button_container.dart';
 import 'package:vitel_chat/src/widgets/textfield_passwordcontainer.dart';
 import 'package:vitel_chat/src/widgets/textfield_container.dart';
 import 'package:provider/provider.dart';
-
 import '../global/constants.dart';
 
 class SearchCartaPorte extends StatefulWidget {
-  final int? _Page = 0;
-  const SearchCartaPorte({
-    Key? key,
-  }) : super(key: key);
+  final DataModel? value;
+  final int totalcarta;
+
+  SearchCartaPorte({Key? key, required this.value, required this.totalcarta})
+      : super(key: key);
   @override
   _SearchCartaPorte createState() => _SearchCartaPorte();
 }
 
 class _SearchCartaPorte extends State<SearchCartaPorte> {
-  //AuthService? authProvider = AuthService();
-
-  final SharedPreference _sharedPreference = SharedPreference();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,15 +43,25 @@ class _SearchCartaPorte extends State<SearchCartaPorte> {
           child: ListView.separated(
             shrinkWrap: true,
             padding: const EdgeInsets.all(10),
-            itemCount: 15,
+            itemCount: widget.totalcarta == null ? 0 : widget.totalcarta,
             itemBuilder: (context, index) {
               return ListTile(
                 trailing: const Text('Fecha'),
                 leading: const FlutterLogo(),
-                title: Text('CP- $index'),
-                subtitle: Text('tipo $index' ' | ' 'Estatus' ' $index'),
+                title: Text(
+                    '${widget.value?.cartaporte?[index].folio} - ${widget.value?.cartaporte?[index].rfcclienteproovedor} ${widget.value?.cartaporte?[index].nombreclienteproovedor} '),
+                subtitle: Text('tipo  N/A '
+                    ' | '
+                    'Estatus ${widget.value?.cartaporte?[index].folio}'),
                 onTap: () {
-                  setState(() {});
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctxt) => DetailCartaPorte(
+                          values: widget.value!.cartaporte![index]),
+                    ),
+                  );
+                  // debugPrint('${widget.value!.cartaporte![index]}');
                 },
               );
             },

@@ -4,8 +4,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
-import 'package:vitel_chat/src/models/response/cartaporte_model.dart';
+//import 'package:vitel_chat/src/models/response/cartaporte_model.dart';
+import 'package:vitel_chat/src/models/response/prueba.dart';
 import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
+import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 import 'package:vitel_chat/src/services/listacarta_service.dart';
 import '../global/constants.dart';
 
@@ -50,7 +52,7 @@ class _ListOperadores extends State<ListOperadores> {
 
   @override
   Widget build(BuildContext context) {
-    _cartaService = Provider.of<CartaListService>(context);
+    _cartaService = Provider.of<CartaListService?>(context);
     return SmartRefresher(
         controller: _refreshController,
         enablePullDown: true,
@@ -58,7 +60,7 @@ class _ListOperadores extends State<ListOperadores> {
         onLoading: () {},
         onRefresh: _onRefresh,
         child: ContainerPortrait(
-          carta: _cartaService!.carta,
+          carta: _cartaService?.carta,
         ));
   }
 }
@@ -75,42 +77,62 @@ class ContainerPortrait extends StatefulWidget {
 }
 
 class _ContainerPortraitState extends State<ContainerPortrait> {
+  final SharedPreference _sharedPreference = SharedPreference();
+  int? totalcout;
+  int? totalcarta;
+
+  @override
+  void initState() {
+    super.initState();
+    _getValue();
+  }
+
+  _getValue() async {
+    totalcout = await _sharedPreference.returnValueInt(conteo);
+    totalcarta = await _sharedPreference.returnValueInt(TOTALCARTA);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
-          title: Text('Carta Porte'),
+          title: const Text('Carta Porte'),
         ), //AppBar
         body: Container(
           padding: const EdgeInsets.only(top: 15, bottom: 15),
           decoration: const BoxDecoration(
-            color: Colors.grey,
+            color: Color.fromARGB(255, 243, 239, 239),
             // border:Color
           ),
           child: ListView.separated(
             shrinkWrap: true,
             padding: const EdgeInsets.all(10),
-            itemCount: 2,
+            itemCount: totalcout == null ? 0 : totalcout!,
             itemBuilder: (context, index) {
               return ListTile(
                 leading: const FlutterLogo(),
-                trailing: Text('$index'),
+                trailing: Text('$totalcarta'),
                 title: Text(
-                  '${widget.carta!.rfc}',
+                  '${widget.carta?.data?[index].nombre}',
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: Text('${widget.carta!.nombre}'),
+                subtitle: Text('${widget.carta?.data?[index].nombre}',
+                    style: TextStyle(fontSize: 12)),
                 onTap: () {
+                  //debugPrint('${widget.carta?.data?[index].nombre}');
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (ctxt) => const DetailCartaPorte()),
+                      builder: (ctxt) => SearchCartaPorte(
+                        value: widget.carta!.data![index],
+                        totalcarta: totalcarta!,
+                      ),
+                    ),
                   );
-                  debugPrint("On tap $index");
                 },
               );
             },

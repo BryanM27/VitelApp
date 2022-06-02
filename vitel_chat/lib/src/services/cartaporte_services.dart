@@ -2,7 +2,8 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:vitel_chat/src/models/response/cartaporte_model.dart';
+//import 'package:vitel_chat/src/models/response/cartaporte_model.dart';
+import 'package:vitel_chat/src/models/response/prueba.dart';
 import '../global/constants.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 
@@ -23,11 +24,12 @@ Future<bool> getCartaporte() async {
 
   debugPrint('prueba de objetos ${response.body}');
   final dec = response.body;
-  var tagObjsJson = jsonDecode(dec)['Data'];
-  final decode = cartaResponseToJson(tagObjsJson, 0);
+  var tagObjsJson = jsonDecode(dec);
+  final decode = cartaPruebaToJson(tagObjsJson);
   // List<Tag> tagObjs =
   //     tagObjsJson.map((tagJson) => Tag.fromJson(tagJson)).toList();
-  debugPrint('prueba de objetos ${decode.cartaporte?[0].idcartaporte}');
+  debugPrint('prueba de objetos ${decode.data?[0].nombre}');
+  debugPrint('prueba de objetos ${decode.data?[0].nombre}');
 
   if (response.statusCode != 200) {
     return false;

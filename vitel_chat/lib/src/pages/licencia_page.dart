@@ -49,11 +49,11 @@ class _Licencia extends State<Licencia> {
                 title: Text('Carta Porte $index'),
                 subtitle: Text('Empresa $index'),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (ctxt) => const DetailCartaPorte()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (ctxt) => const DetailCartaPorte()),
+                  // );
                   debugPrint("On tap $index");
                 },
               );

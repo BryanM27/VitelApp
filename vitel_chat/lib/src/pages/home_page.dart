@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       case 1:
         return ListOperadores();
       case 2:
-        return const DetailCartaPorte();
+        return Container();
       // case 3:
       //   return SearchCartaPorte();
       default:
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                 ElevatedButton(
                   style: style,
                   onPressed: () {
-                    getCartaporte();
+                    //  _SendLicencia(context);
                   },
                   child: const Text('Enviar'),
                 ),
@@ -183,5 +183,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void _SendLicencia(BuildContext context) async {
+    _sharedPreference.saveValueString(licenciaController!.text, email);
   }
 }

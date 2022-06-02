@@ -91,13 +91,19 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
           child: ListView.separated(
             shrinkWrap: true,
             padding: const EdgeInsets.all(10),
-            itemCount: 1,
+            itemCount: 2,
             itemBuilder: (context, index) {
               return ListTile(
                 leading: const FlutterLogo(),
                 trailing: Text('$index'),
-                title: Text('Carta Porte ${widget.carta!.rfc}'),
-                subtitle: Text('Empresa $index'),
+                title: Text(
+                  '${widget.carta!.rfc}',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text('${widget.carta!.nombre}'),
                 onTap: () {
                   Navigator.push(
                     context,

@@ -95,11 +95,6 @@ class DetailCartaPorte extends StatelessWidget {
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                  const CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage('assets/images/Camion.JPG'),
-                                    radius: 60,
-                                  ),
                                 ]),
                           ),
                           const TextBoldContainer(

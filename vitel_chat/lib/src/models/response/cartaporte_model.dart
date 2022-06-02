@@ -18,8 +18,8 @@ class CartaModelResp {
   });
 
   factory CartaModelResp.fromJson(dynamic json) => CartaModelResp(
-        idempresa: json['IDempresa'],
-        clienteid: json['Clienteid'],
+        idempresa: json['IDEmpresa'],
+        clienteid: json['ClienteID'],
         nombre: json['Nombre'],
         rfc: json['RFC'],
         cartaporte: (json['CartaPorte'] as List)

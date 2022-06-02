@@ -6,6 +6,7 @@ import 'package:vitel_chat/src/pages/auth_login.dart';
 import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/home_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
+import 'package:vitel_chat/src/services/listacarta_service.dart';
 
 import 'global/constants.dart';
 import 'package:vitel_chat/src/pages/auth_login.dart';
@@ -43,12 +44,12 @@ class _MyAppState extends State<MyApp> {
             providers: [
               // ChangeNotifierProvider(create: (_) => RequestService()),
               // ChangeNotifierProvider(create: (_) => ChecksService()),
-              // ChangeNotifierProvider(create: (_) => BinnacleService()),
+              ChangeNotifierProvider(create: (_) => CartaListService()),
               ChangeNotifierProvider(create: (_) => UserService()),
               //ChangeNotifierProvider(create: (_) => getCartaporte()),
             ],
             child: MaterialApp(
-              title: 'VITEL',
+              title: 'VENGOVOY',
               navigatorKey: navigatorKey,
               theme: ThemeData(
                 primaryColor: kPrimaryColor,

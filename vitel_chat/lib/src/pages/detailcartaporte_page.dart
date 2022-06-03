@@ -56,7 +56,6 @@ class _DetailCartaPorte extends State<DetailCartaPorte> {
                         //Item 2/4
                         Expanded(
                           child: Container(
-                            padding: const EdgeInsets.all(30),
                             child: CircleAvatar(
                               backgroundImage:
                                   AssetImage('assets/images/xmlimage.jpg'),
@@ -66,7 +65,6 @@ class _DetailCartaPorte extends State<DetailCartaPorte> {
                         ),
                         Expanded(
                           child: Container(
-                            padding: const EdgeInsets.all(30),
                             child: const Center(
                               child: CircleAvatar(
                                 backgroundImage:

@@ -46,13 +46,14 @@ class _SearchCartaPorte extends State<SearchCartaPorte> {
             itemCount: widget.totalcarta == null ? 0 : widget.totalcarta,
             itemBuilder: (context, index) {
               return ListTile(
-                trailing: const Text('Fecha'),
+                trailing: Text(
+                    '${widget.value?.cartaporte?[index].fechainicioviaje}'),
                 leading: const FlutterLogo(),
                 title: Text(
                     '${widget.value?.cartaporte?[index].folio} - ${widget.value?.cartaporte?[index].rfcclienteproovedor} ${widget.value?.cartaporte?[index].nombreclienteproovedor} '),
                 subtitle: Text('tipo  N/A '
                     ' | '
-                    'Estatus ${widget.value?.cartaporte?[index].folio}'),
+                    'Estatus: ${widget.value?.cartaporte?[index].estatus}'),
                 onTap: () {
                   Navigator.push(
                     context,

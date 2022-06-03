@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 CartaModelResp cartaPruebaToJson(String str) =>
     CartaModelResp.fromJson(json.decode(str));
 
@@ -61,6 +63,7 @@ class CartaModel {
   final String? aseguradora;
   final String? permisovehiculo;
   final String? polizavehiculo;
+  final String? fechainicioviaje;
 
   CartaModel({
     this.idcartaporte,
@@ -76,22 +79,24 @@ class CartaModel {
     this.aseguradora,
     this.permisovehiculo,
     this.polizavehiculo,
+    this.fechainicioviaje,
   });
 
   factory CartaModel.fromJson(Map<String, dynamic> json) => CartaModel(
-      idcartaporte: json['IDCartaPorte'],
-      estatus: json['Estatus'],
-      folio: json['Folio'],
-      nombreclienteproovedor: json['NombreClienteProveedor'],
-      rfcclienteproovedor: json['RFCClienteProveedor'],
-      idclienteproovedor: json['IDClienteProveedor'],
-      modelovehiculo: json['ModeloVehiculo'],
-      placasvehiculo: json['PlacasVehiculo'],
-      tipovehiculo: json['VehiculoTipo'],
-      vehiculopermiso: json['VehiculoPermiso'],
-      aseguradora: json['AseguradoraVehiculo'],
-      permisovehiculo: json['PermisoVehiculo'],
-      polizavehiculo: json['PolizaVehiculo']);
-
-  get name => null;
+        idcartaporte: json['IDCartaPorte'],
+        estatus: json['Estatus'],
+        folio: json['Folio'],
+        nombreclienteproovedor: json['NombreClienteProveedor'],
+        rfcclienteproovedor: json['RFCClienteProveedor'],
+        idclienteproovedor: json['IDClienteProveedor'],
+        modelovehiculo: json['ModeloVehiculo'],
+        placasvehiculo: json['PlacasVehiculo'],
+        tipovehiculo: json['VehiculoTipo'],
+        vehiculopermiso: json['VehiculoPermiso'],
+        aseguradora: json['AseguradoraVehiculo'],
+        permisovehiculo: json['PermisoVehiculo'],
+        polizavehiculo: json['PolizaVehiculo'],
+        fechainicioviaje: DateFormat("dd-MM-yy")
+            .format(DateTime.parse(json['FechaInicioViaje'])),
+      );
 }

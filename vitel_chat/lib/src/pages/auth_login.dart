@@ -54,19 +54,15 @@ class _LoginPageState extends State<LoginPage> {
               // Logos
               Container(
                 margin: EdgeInsets.symmetric(
-                    vertical: SizeConfig.isMobilePortrait ? 50 : 10),
+                    vertical: SizeConfig.isMobilePortrait ? 60 : 10),
                 child: Row(
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(right: 10),
-                      child: SvgPicture.asset(
-                        'assets/images/logo_icon_git.svg',
-                        height: 75,
+                      child: Image.asset(
+                        'assets/images/LOGO_Vengo_Voy.png',
+                        height: 120,
                       ),
-                    ),
-                    Container(
-                      child:
-                          SvgPicture.asset('assets/images/logo_text_git.svg'),
                     ),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -11,24 +11,32 @@ class TextBoldContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          title!,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 30),
+            child: Text(
+              title!,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
-        Text(
-          info!,
-          style: TextStyle(
-            fontSize: 14,
-          ),
-        ),
-      ],
+          Container(
+            margin: EdgeInsets.only(top: 3),
+            child: Text(
+              info!,
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

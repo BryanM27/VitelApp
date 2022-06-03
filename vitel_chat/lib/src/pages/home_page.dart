@@ -4,12 +4,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/app.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
-import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/detailscartaporte.dart';
-import 'package:vitel_chat/src/pages/fragments/register_license.dart';
 import 'package:vitel_chat/src/pages/listcartaporte_page.dart';
-import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
-import 'package:vitel_chat/src/services/cartaporte_services.dart';
 
 import '../global/constants.dart';
 import '../global/size_config.dart';

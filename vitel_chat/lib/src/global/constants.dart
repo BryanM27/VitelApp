@@ -31,10 +31,12 @@ const USERSTATUS = "Status";
 const LOGGEDIN = "LoggedIn";
 
 //
-const licencia = "Licencia";
+const LICENCIA = "Licencia";
 const conteo = "Conteo";
 const TOTALCARTA = "TotalCarta";
 const TOTALDATOS = "TotalDatos";
+const ESTATUS = "Estatus";
+
 //Colors
 const kPrimaryColor = Color.fromRGBO(3, 103, 166, 1.0);
 //const kSelectorColor = Color.fromRGBO(3, 139, 225, 0.8);

@@ -47,7 +47,7 @@ class _TextFieldPasswordContainerState
           onSaved: (value) => _password = value,
           validator: (String? value) {
             if (value == null || value.isEmpty) {
-              return 'Please enter some text';
+              return 'Introduce tu contraseña';
             }
             return null;
           },

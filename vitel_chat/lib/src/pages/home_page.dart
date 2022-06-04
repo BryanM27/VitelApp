@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/app.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/pages/detailscartaporte.dart';
+import 'package:vitel_chat/src/pages/licencia_page.dart';
 import 'package:vitel_chat/src/pages/listcartaporte_page.dart';
+import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
+import 'package:vitel_chat/src/services/listacarta_service.dart';
 
 import '../global/constants.dart';
 import '../global/size_config.dart';
@@ -18,6 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _page = 0;
+  CartaListService? _cartaService;
 
   SharedPreference _sharedPreference = SharedPreference();
   TextEditingController? licenciaController;
@@ -28,60 +32,26 @@ class _HomePageState extends State<HomePage> {
   Widget _callPage(int actuallyPage) {
     switch (actuallyPage) {
       case 0:
-        return _homeWidget();
+        return Licencia();
       // case 1:
       //   return RegisterLicense();
       case 1:
         return ListOperadores();
       case 2:
-        return DetailsCartaPorte(
-          values: null,
+        return SearchCartaPorte(
+          value: null,
+          totalcarta: 0,
         );
       // case 3:
       //   return SearchCartaPorte();
       default:
-        return _homeWidget();
+        return Licencia();
     }
   }
 
   setStatePage(int index) => setState(() => _page = index);
   final ButtonStyle style =
       ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
-
-  Widget _homeWidget() => Center(
-        child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-          height: 160.0,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(6.0)),
-            color: Colors.grey.shade300,
-          ),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Text(
-                    'Para poder ver sus cartas porte asignadas, es necesario que ingrese su No. de licencia.'),
-                TextFormField(
-                  controller: licenciaController,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Numero de licencia',
-                  ),
-                ),
-                ElevatedButton(
-                  style: style,
-                  onPressed: () {
-                    //  _SendLicencia(context);
-                  },
-                  child: const Text('Enviar'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +119,7 @@ class _HomePageState extends State<HomePage> {
 
     return WillPopScope(
       onWillPop: () async {
+        if (_page == 2) setStatePage(2);
         if (_page != 0) setStatePage(0);
         if (_page == 0) {
           await navigatorKey.currentState!.maybePop();

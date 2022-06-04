@@ -27,50 +27,60 @@ class SearchCartaPorte extends StatefulWidget {
   _SearchCartaPorte createState() => _SearchCartaPorte();
 }
 
+final _formKey = GlobalKey<FormState>();
+
 class _SearchCartaPorte extends State<SearchCartaPorte> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: kPrimaryColor,
-          title: const Text('Listado de cartaportes'),
-        ), //AppBar
-        body: Container(
-          padding: const EdgeInsets.only(top: 15, bottom: 15),
-          decoration: const BoxDecoration(
-            color: Colors.white,
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+        title: const Text('Listado de cartaportes'),
+      ), //AppBar
+      body: Form(
+          key: _formKey,
+          child: Container(
+            padding: const EdgeInsets.only(top: 15, bottom: 15),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: ListView.separated(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(10),
+              itemCount: widget.totalcarta == null ? 0 : widget.totalcarta,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  trailing: Text(
+                      '${widget.value?.cartaporte?[index].fechainicioviaje}'),
+                  leading: const FlutterLogo(),
+                  title: Text(
+                      '${widget.value?.cartaporte?[index].folio} - ${widget.value?.cartaporte?[index].rfcclienteproovedor} ${widget.value?.cartaporte?[index].nombreclienteproovedor} '),
+                  subtitle: Text('tipo  N/A '
+                      ' | '
+                      'Estatus: ${widget.value?.cartaporte?[index].estatus}'),
+                  onTap: () async {
+                    if (!_formKey.currentState!.validate()) return;
+
+                    _formKey.currentState!.save();
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (ctxt) => DetailCartaPorte(
+                            values: widget.value!.cartaporte![index]),
+                      ),
+                    );
+
+                    // debugPrint('${widget.value!.cartaporte![index]}');
+                  },
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const Divider();
+              },
+            ),
+          ) // center
           ),
-          child: ListView.separated(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(10),
-            itemCount: widget.totalcarta == null ? 0 : widget.totalcarta,
-            itemBuilder: (context, index) {
-              return ListTile(
-                trailing: Text(
-                    '${widget.value?.cartaporte?[index].fechainicioviaje}'),
-                leading: const FlutterLogo(),
-                title: Text(
-                    '${widget.value?.cartaporte?[index].folio} - ${widget.value?.cartaporte?[index].rfcclienteproovedor} ${widget.value?.cartaporte?[index].nombreclienteproovedor} '),
-                subtitle: Text('tipo  N/A '
-                    ' | '
-                    'Estatus: ${widget.value?.cartaporte?[index].estatus}'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (ctxt) => DetailCartaPorte(
-                          values: widget.value!.cartaporte![index]),
-                    ),
-                  );
-                  // debugPrint('${widget.value!.cartaporte![index]}');
-                },
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const Divider();
-            },
-          ),
-        ) // center
-        );
+    );
   }
 }

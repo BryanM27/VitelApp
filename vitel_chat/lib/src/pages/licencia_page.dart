@@ -10,6 +10,8 @@ import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 // import 'package:app_resources/src/models/LoginMovil_model.dart';
 import 'package:vitel_chat/src/services/auth_service.dart';
+import 'package:vitel_chat/src/services/listacarta_service.dart';
+import 'package:vitel_chat/src/services/validatelicence_service.dart';
 import 'package:vitel_chat/src/widgets/button_container.dart';
 import 'package:vitel_chat/src/widgets/textfield_passwordcontainer.dart';
 import 'package:vitel_chat/src/widgets/textfield_container.dart';
@@ -24,45 +26,60 @@ class Licencia extends StatefulWidget {
 
 class _Licencia extends State<Licencia> {
   int _page = 0;
-  final SharedPreference _sharedPreference = SharedPreference();
+  CartaListService? _cartaService;
+  SharedPreference _sharedPreference = SharedPreference();
+  TextEditingController licenciaController = new TextEditingController();
 
+  final ButtonStyle style =
+      ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: kPrimaryColor,
-          title: Text('Carta Porte'),
-        ), //AppBar
-        body: Container(
-          padding: const EdgeInsets.only(top: 15, bottom: 15),
+  Widget build(BuildContext context) => Center(
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+          height: 160.0,
           decoration: BoxDecoration(
-            color: Colors.white,
+            borderRadius: const BorderRadius.all(Radius.circular(6.0)),
+            color: Colors.grey.shade300,
           ),
-          child: ListView.separated(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(10),
-            itemCount: 15,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: const FlutterLogo(),
-                trailing: Text('$index'),
-                title: Text('Carta Porte $index'),
-                subtitle: Text('Empresa $index'),
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (ctxt) => const DetailCartaPorte()),
-                  // );
-                  debugPrint("On tap $index");
-                },
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const Divider();
-            },
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                    'Para poder ver sus cartas porte asignadas, es necesario que ingrese su No. de licencia.'),
+                TextField(
+                  controller: licenciaController,
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Numero de licencia',
+                  ),
+                ),
+                ElevatedButton(
+                  style: style,
+                  onPressed: () {
+                    _getCartaporte(context);
+                  },
+                  child: const Text('Enviar'),
+                ),
+              ],
+            ),
           ),
-        ) // center
-        );
+        ),
+      );
+
+  void _getCartaporte(BuildContext context) async {
+    final SharedPreference _sharedPreference = SharedPreference();
+    if (licenciaController!.text != null) {
+      String token = await _sharedPreference.returnValueString(TOKENMOVIL);
+      //String lic = await _sharedPreference.returnValueString(LICENCIA);
+      bool resp = await getCartaporte(token, licenciaController!.text);
+      if (resp == true) {
+        _sharedPreference.saveValueString(licenciaController!.text, LICENCIA);
+        debugPrint("LICENCIA  VALIDA");
+      } else {
+        debugPrint("LICENCIA NO VALIDA");
+      }
+    }
   }
 }

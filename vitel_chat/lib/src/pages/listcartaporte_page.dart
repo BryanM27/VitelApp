@@ -47,7 +47,8 @@ class _ListOperadores extends State<ListOperadores> {
   void _getCartaporte() async {
     final SharedPreference _sharedPreference = SharedPreference();
     String token = await _sharedPreference.returnValueString(TOKENMOVIL);
-    bool resp = await _cartaService!.getListCarta(token);
+    String lic = await _sharedPreference.returnValueString(LICENCIA);
+    bool resp = await _cartaService!.getListCarta(token, lic);
   }
 
   @override
@@ -77,7 +78,11 @@ class ContainerPortrait extends StatefulWidget {
 }
 
 class _ContainerPortraitState extends State<ContainerPortrait> {
+  final _formKey = GlobalKey<FormState>();
   final SharedPreference _sharedPreference = SharedPreference();
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
   int? totalcout;
   int? totalcarta;
 
@@ -85,6 +90,21 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
   void initState() {
     super.initState();
     _getValue();
+  }
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _getValue();
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    _refreshController.loadComplete();
   }
 
   _getValue() async {
@@ -95,14 +115,17 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: kPrimaryColor,
-          title: const Text('Carta Porte'),
-        ), //AppBar
-        body: Container(
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+        title: const Text('Carta Porte'),
+      ), //AppBar
+      body: Form(
+        key: _formKey,
+        child: Container(
           padding: const EdgeInsets.only(top: 15, bottom: 15),
           decoration: const BoxDecoration(
             color: Color.fromARGB(255, 243, 239, 239),
+
             // border:Color
           ),
           child: ListView.separated(
@@ -114,7 +137,7 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
                 leading: const FlutterLogo(),
                 trailing: Text('$totalcarta'),
                 title: Text(
-                  '${widget.carta?.data?[index].nombre}',
+                  '${widget.carta?.data?[index].rfc}',
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -140,7 +163,15 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
               return const Divider();
             },
           ),
-        ) // center
-        );
+        ),
+      ), // center
+    );
+  }
+
+  @override
+  Widget LoadingP(BuildContext context) {
+    return CircularProgressIndicator(
+      value: _getValue(),
+    );
   }
 }

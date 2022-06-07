@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/global/size_config.dart';
+import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 //import 'package:vitel_chat/src/models/response/cartaporte_model.dart';
 import 'package:vitel_chat/src/models/response/prueba.dart';
@@ -46,12 +47,11 @@ class _ListOperadores extends State<ListOperadores> {
 
   Future _getCartaporte() async {
     final SharedPreference _sharedPreference = SharedPreference();
-    bool islic = await _sharedPreference.returnValueBoolean(ISLICENCIA);
-    if (islic == true) {
-      String token = await _sharedPreference.returnValueString(TOKENMOVIL);
-      String lic = await _sharedPreference.returnValueString(LICENCIA);
-      bool resp = await _cartaService!.getListCarta(token, lic);
-    }
+    final prefs = SharedPref.instance;
+
+    String? token = await _sharedPreference.returnValueString(TOKENMOVIL);
+    String? lic = prefs.licenciaUser!;
+    bool resp = await _cartaService!.getListCarta(token, lic);
   }
 
   @override
@@ -85,7 +85,7 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
   final SharedPreference _sharedPreference = SharedPreference();
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-
+  final prefs = SharedPref.instance;
   int? totalcout;
   int? totalcarta;
 
@@ -122,7 +122,7 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
         backgroundColor: kPrimaryColor,
         title: const Text('Carta Porte'),
       ), //AppBar
-      body: totalcarta == null || totalcarta == 0
+      body: prefs.dataList == false
           ? Center(
               child: CircularProgressIndicator(),
             )

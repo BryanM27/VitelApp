@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:vitel_chat/src/global/constants.dart';
+import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 Future<bool> getCartaporte(tokenResp, lic) async {
   final SharedPreference _sharedPreference = SharedPreference();
+  final prefs = SharedPref.instance;
+
   // String tokens = await _sharedPreference.returnValueString(TOKENMOVIL);
   if (tokenResp != null && lic != null) {
     final response = await http.get(
@@ -18,7 +21,9 @@ Future<bool> getCartaporte(tokenResp, lic) async {
         });
 
     final dec = response.statusCode;
-    _sharedPreference.saveValueBoolean(true, ISLICENCIA);
+    prefs.validarLicencia = true;
+    prefs.licenciaUser = lic;
+
     _sharedPreference.saveValueString(lic, LICENCIA);
     debugPrint('GetData  ${dec}');
     return true;

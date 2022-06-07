@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vitel_chat/src/global/constants.dart';
+import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/services/listacarta_service.dart';
 import 'package:vitel_chat/src/services/validatelicence_service.dart';
@@ -16,39 +20,14 @@ class _LicenciaValidate extends State<LicenciaValidate> {
   CartaListService? _cartaService;
   SharedPreference _sharedPreference = SharedPreference();
   TextEditingController licenciaController = new TextEditingController();
-  RefreshController _refreshController =
-      new RefreshController(initialRefresh: false);
 
-  bool? resp;
-  String? licnum;
+  final prefs = SharedPref.instance;
+  final responseBool = new StreamController<bool>();
 
   @override
-  void initState() {
-    super.initState();
-    reload();
-    resp = resp ?? false;
-  }
-
-  void _onRefreshLicencia() async {
-    await Future.delayed(Duration(milliseconds: 1000));
-  }
-
-  // Future<bool?> getData() async {
-  //   licnum = await _sharedPreference.returnValueString(LICENCIA);
-  //   resp = await _sharedPreference.returnValueBoolean(ISLICENCIA);
-  //   if (resp == null) {
-  //     return false;
-  //   }
-  //   return resp;
-  // }
-  void reload() async {
-    licnum = await _sharedPreference.returnValueString(LICENCIA);
-    resp = await _sharedPreference.returnValueBoolean(ISLICENCIA);
-  }
-
-  Future<void> getData() async {
-    // licnum = await _sharedPreference.returnValueString(LICENCIA);
-    // resp = await _sharedPreference.returnValueBoolean(ISLICENCIA);
+  void dispose() {
+    super.dispose();
+    responseBool.close();
   }
 
   final ButtonStyle style = ElevatedButton.styleFrom(
@@ -73,40 +52,40 @@ class _LicenciaValidate extends State<LicenciaValidate> {
               //         child: CircularProgressIndicator(),
               //       )
               //     : getResp(resp),
-              FutureBuilder(
-            future: getData(),
+              StreamBuilder(
+            stream: responseBool.stream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (resp == null) {
-                return Container(
-                  child: Text('Esperando respuesta'),
-                );
+              if (prefs.validarLicencia == false) {
+                return getFalse();
               }
-              return getResp(snapshot.data);
+              return getTrue();
+              // return getTrue();
             },
           )),
     );
   }
 
-  Widget getResp(bool? res) {
-    if (resp! == true) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text('Su número de licencia actual es $licnum'),
-            ElevatedButton(
-              style: style,
-              onPressed: () {
-                // _getCartaporte(context);
+  Widget getTrue() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text('Su número de licencia actual es ${prefs.licenciaUser}'),
+          ElevatedButton(
+            style: style,
+            onPressed: () {
+              // _getCartaporte(context);
+              //reload();
+              _showMyDialog();
+            },
+            child: const Text('Cambiar'),
+          ),
+        ],
+      ),
+    );
+  }
 
-                _showMyDialog();
-              },
-              child: const Text('Cambiar'),
-            ),
-          ],
-        ),
-      );
-    }
+  Widget getFalse() {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -123,8 +102,9 @@ class _LicenciaValidate extends State<LicenciaValidate> {
           ElevatedButton(
             style: style,
             onPressed: () {
+              // prefs.validarLicencia = true;
+              // responseBool.sink.add(true);
               _getCartaporte(context);
-
               // _showMyDialog();
             },
             child: const Text('Enviar'),
@@ -153,9 +133,12 @@ class _LicenciaValidate extends State<LicenciaValidate> {
             TextButton(
               child: const Text('Cambiar'),
               onPressed: () {
-                _sharedPreference.removeOne(LICENCIA);
-                _sharedPreference.saveValueBoolean(false, ISLICENCIA);
-                resp = false;
+                prefs.dataList = false;
+                prefs.validarLicencia = false;
+                responseBool.sink.add(false);
+                // _sharedPreference.removeOne(LICENCIA);
+                // _sharedPreference.saveValueBoolean(false, ISLICENCIA);
+                // resp = false;
                 Navigator.of(context).pop();
                 //  Navigator.pushReplacementNamed(context, '/home');
               },
@@ -196,11 +179,8 @@ class _LicenciaValidate extends State<LicenciaValidate> {
             TextButton(
               child: Text('Aceptar'),
               onPressed: () {
-                _sharedPreference.removeOne(LICENCIA);
-                _sharedPreference.saveValueBoolean(false, ISLICENCIA);
-                resp = false;
+                prefs.dataList = true;
                 Navigator.of(context).pop();
-                // Navigator.pushReplacementNamed(context, '/home');
               },
               style: TextButton.styleFrom(
                 primary: Colors.red,
@@ -218,10 +198,11 @@ class _LicenciaValidate extends State<LicenciaValidate> {
       //String lic = await _sharedPreference.returnValueString(LICENCIA);
       bool resp = await getCartaporte(token, licenciaController!.text);
       if (resp == true) {
-        String response = await _sharedPreference.returnValueString(LICENCIA);
+        prefs.validarLicencia = true;
+
+        responseBool.sink.add(true);
         debugPrint("LICENCIA  VALIDA");
         _aceptarRegistro();
-        resp = true;
       } else {
         debugPrint("LICENCIA NO VALIDA");
       }

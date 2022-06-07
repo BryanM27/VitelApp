@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/models/operador_model.dart';
 import 'package:vitel_chat/src/models/response/loginresponse_model.dart';
 import 'package:vitel_chat/src/services/token.dart';
@@ -15,6 +16,7 @@ class AuthService with ChangeNotifier {
   final SharedPreference _sharedPreference = SharedPreference();
 
   Future<bool> login(LoginMovilModel login) async {
+    final prefs = SharedPref.instance;
     //convertir modelo a Json
     json.encode(login);
     //Header requerido para enviar los valores
@@ -49,6 +51,17 @@ class AuthService with ChangeNotifier {
     }
     _sharedPreference.saveValueString(decodedData.accesstoken!, TOKENMOVIL);
     _sharedPreference.saveValueBoolean(true, LOGGEDIN);
+
+    if (prefs.userEmail != '' && prefs.userEmail != login.email) {
+      prefs.userEmail = login.email;
+      prefs.validarLicencia = false;
+      prefs.dataList = true;
+      prefs.licenciaUser = 'NO HAY INFORMACION';
+      prefs.tokenMovil = decodedData.accesstoken!;
+      notifyListeners();
+      return true;
+    }
+    prefs.tokenMovil = decodedData.accesstoken!;
 
     notifyListeners();
 

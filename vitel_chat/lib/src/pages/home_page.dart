@@ -3,9 +3,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/app.dart';
+import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
-import 'package:vitel_chat/src/pages/detailscartaporte.dart';
-import 'package:vitel_chat/src/pages/licencia_page.dart';
+import 'package:vitel_chat/src/pages/licenciavalidate_page.dart';
 import 'package:vitel_chat/src/pages/listcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 import 'package:vitel_chat/src/services/listacarta_service.dart';
@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
 
   SharedPreference _sharedPreference = SharedPreference();
   TextEditingController? licenciaController;
+  final prefs = SharedPref.instance;
 
   GlobalKey<ScaffoldState> mScaffoldState = GlobalKey<ScaffoldState>();
   GlobalKey bottomNavigationBar = GlobalKey();
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   Widget _callPage(int actuallyPage) {
     switch (actuallyPage) {
       case 0:
-        return Licencia();
+        return LicenciaValidate();
       // case 1:
       //   return RegisterLicense();
       case 1:
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
       // case 3:
       //   return SearchCartaPorte();
       default:
-        return Licencia();
+        return LicenciaValidate();
     }
   }
 
@@ -77,8 +78,15 @@ class _HomePageState extends State<HomePage> {
                 "Cerrar",
                 style: TextStyle(color: kRojoColor),
               ),
-              onPressed: () {
-                _sharedPreference.removeAll();
+              onPressed: () async {
+                _sharedPreference.removeOne(ISLICENCIA);
+                _sharedPreference.removeOne(TOKENMOVIL);
+                _sharedPreference.removeOne(LICENCIA);
+                _sharedPreference.removeOne(LOGGEDIN);
+                _sharedPreference.removeOne(USERSTATUS);
+                _sharedPreference.removeOne(ESTATUS);
+                prefs.dataList = false;
+
                 Navigator.pushReplacementNamed(context, '/');
               },
             ))

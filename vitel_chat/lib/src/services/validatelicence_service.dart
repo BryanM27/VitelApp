@@ -9,7 +9,7 @@ Future<bool> getCartaporte(tokenResp, lic) async {
   if (tokenResp != null && lic != null) {
     final response = await http.get(
         Uri.parse(
-            '${url}API/CartaPorteMovil/GetCartasPorteOperador?NoLicencia=6519681'),
+            '${url}API/CartaPorteMovil/GetCartasPorteOperador?NoLicencia=$lic'),
         //  body: "RFC:",
         headers: {
           'Content-Type': 'application/json',
@@ -18,8 +18,11 @@ Future<bool> getCartaporte(tokenResp, lic) async {
         });
 
     final dec = response.statusCode;
+    _sharedPreference.saveValueBoolean(true, ISLICENCIA);
+    _sharedPreference.saveValueString(lic, LICENCIA);
     debugPrint('GetData  ${dec}');
+    return true;
   }
 
-  return true;
+  return false;
 }

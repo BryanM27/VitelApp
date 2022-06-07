@@ -36,6 +36,7 @@ const conteo = "Conteo";
 const TOTALCARTA = "TotalCarta";
 const TOTALDATOS = "TotalDatos";
 const ESTATUS = "Estatus";
+const ISLICENCIA = "IsLicencia";
 
 //Colors
 const kPrimaryColor = Color.fromRGBO(3, 103, 166, 1.0);

@@ -22,12 +22,12 @@ class CartaListService with ChangeNotifier {
   Future<bool> getListCarta(String tokenResp, String lic) async {
     SharedPreference _sharedPreference = SharedPreference();
     // try{
-    tokenResp =
-        "aPjGSe-x7EVBI24_MXFdHYuUOzTT1OFZTyoreZrhk62E9dC1fFmklnZjgAA3E6xB16S2XXSXsj4OmQHYM1p5iVhI5bRQm5hrAd3HEprVVBcHMBdocg5JtzV_l-3bUgTaJ1Jf8JW0xQtSqKqawbjJnT59QuL6v9jq5CsCHiV2eWODHBqcN0Of6TlOfcwrUX6_HBHhhKdl_8tCJ4sikLLuf6mRtyd6EyYZTseDUSIitfBLXllfLH2CTBCCaywIqiayFvoGizeTTkm_Uwwf5Jet8tsZZvVSfos6Gd9bIIReTAzMlgGAsJQkSsZ6nCxrU-EnrrIegF9yH9-OA70OttvS1xX8Eh-KLbs1QBaQYpFBkD3ye9CDuF8OS5EAlYoXXpe3aqCJHemKY6hWszJV_c_equVZyVSaOHsLrauy9IbNwRj-w6bJKEdRWwoKZMLtTWFl9eEdi2mlfjIeev4n7kVIceNC0bgpQIt6Z5DisibwkRg46TC5JPfoXq4utQW7HdDmuTIM1EtR02gLIeZLQvEOWKLRtLfJviMDlCiI-2TyledhIqJX2b_U6tvr88cglgAf2biWU5p2hN6NzLfIzFyPtO85qDlX1GAbg3a309azkLrgbl_9p1EJLm8nmsuzZKet42DHR2XkY5mW5IUadl_kHBmDfQQOH2UrjfjycnmeaGdbVugm3JaKvDUT9-7Wh7iIzfvWccjwxdIpnC4spZcg8rQBbFZGk8EIN9LYSEFpssbzh1R5gkQG-9ZHWpO-PNNmMu5NEbH8QaF39rnHAuU31C2z8-4_gP2TNG5bMlAkSEEngvhlxdX4VFA4WBk4uPFxpHclj5ybrcrRnG1sX9zwerzwpn8xcosvICLntQ8_D1UsqC9_FvT4Ca-23mvViFjR";
+    // tokenResp =
+    //     "4K6c54iO1ZOA8GTWfUyjMlVybHSE3eXowwAzxoc4ANFlGFNxmx0uaCMvPdzmkfwOzBl-1khq4cIulZLI55VMxkPbBa3kco2NOfWzF0VDJUWN8zw9wfG4XTmpfynrNScowQiKqzp2IvDUksI28i4d9NCV-VnDLzWHIb9DyNhm9Aau_GtHo5NRaOCRTXmUWtkDEJvCRfHlvY-k7cw6QhnZLFAjIqk7Wh5MI2GoLdgyOW3ykNYA69y6TUMgVskaUs5cPC35Kf1kmBJVkOOz__P2vfHgZWAgXESaIzYsQJe3MJiNrym6wnFVWEDUw4wJHhYpIwZtFDmU76XTZ6ETdXH3xnFnckIxYIZOj8rtKNKVuXmR5lwUOMbhe4PVHPKk40IGEw3F2XzpzgIF-QV0q3ldhjLMOUroBzwjr9vW6jJQCuX1ab6e01vhgb-EfM6O3Af1jMtD-W9KMHfCwzbt2GjQ7YnnHni6oG7wHufSOpsSvN8782WunCawjhHeMfWjkqSHbkBqfndoXDne6_9pMHj3nONrvpfzBmD_SYLbwpx9cvBTIAIG4KYQlts5LSy9rYGCazLzB2ZGPZZXVz2nVdoSvN0ZeIFRTzqh19sUVtv8TyqFUH10b9aUTa4oXmGQvu14gYKI1q9-5KdMxmzMij61zlORTSXbJuEGvvVEzBieVWCYM7XJcmpauRGPmxxAt4vQn8zKDxoqpMatEED7dQ8m3DBuGpKYsDrPP2XFxKX-z809isAl7tiDjj81oe_A_y6ZEfoe8ZoXgqfukxhuhfON_TRo0NfCB5U68wKwQaLSHI59ZbM-EZpyZMQqWJ9nL6bJFjTa9UyNyihx_lBQtxTDYmNJgQNTsAIi-uidIi9Xyw0cmueHUpJdp-5hHATYytvu";
     if (tokenResp != null && lic != null) {
       final response = await http.get(
           Uri.parse(
-              '${url}API/CartaPorteMovil/GetCartasPorteOperador?NoLicencia=6519681'),
+              '${url}API/CartaPorteMovil/GetCartasPorteOperador?NoLicencia=$lic'),
           //  body: "RFC:",
           headers: {
             'Content-Type': 'application/json',
@@ -38,13 +38,14 @@ class CartaListService with ChangeNotifier {
       final dec = response.body;
       final decodedData = cartaPruebaToJson(dec);
       decodedData.toString();
-      debugPrint("estatus ${response.statusCode}");
+      debugPrint("estatus guardado ${response.statusCode}");
       int totalDatos = decodedData.data!.length;
       int? totalCarta = decodedData.data?[totalDatos - 1].cartaporte!.length;
 
       _sharedPreference.saveValueInt(response.statusCode, ESTATUS);
       _sharedPreference.saveValueInt(totalDatos, conteo);
       _sharedPreference.saveValueInt(totalCarta!, TOTALCARTA);
+      //_sharedPreference.saveValueBoolean(true, ISLICENCIA);
       carta = decodedData;
 
       return true;

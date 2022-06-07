@@ -1,88 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-// import 'package:app_resources/src/Widgets/ToastCustom.dart';
+import 'package:vitel_chat/src/global/constants.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/services/listacarta_service.dart';
 import 'package:vitel_chat/src/services/validatelicence_service.dart';
 
-import '../global/constants.dart';
-
-class Licencia extends StatefulWidget {
+class LicenciaValidate extends StatefulWidget {
+  LicenciaValidate({Key? key}) : super(key: key);
   @override
-  _Licencia createState() => _Licencia();
+  // ignore: library_private_types_in_public_api
+  _LicenciaValidate createState() => _LicenciaValidate();
 }
 
-class _Licencia extends State<Licencia> {
+class _LicenciaValidate extends State<LicenciaValidate> {
   CartaListService? _cartaService;
   SharedPreference _sharedPreference = SharedPreference();
-  bool? resp;
-
-  String licnum = "";
   TextEditingController licenciaController = new TextEditingController();
   RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+      new RefreshController(initialRefresh: false);
+
+  bool? resp;
+  String? licnum;
 
   @override
   void initState() {
     super.initState();
-    _onLoadingLicencia();
+    reload();
+    resp = resp ?? false;
   }
 
   void _onRefreshLicencia() async {
     await Future.delayed(Duration(milliseconds: 1000));
-    initValue();
-    _refreshController.refreshCompleted();
   }
 
-  void initValue() async {
+  // Future<bool?> getData() async {
+  //   licnum = await _sharedPreference.returnValueString(LICENCIA);
+  //   resp = await _sharedPreference.returnValueBoolean(ISLICENCIA);
+  //   if (resp == null) {
+  //     return false;
+  //   }
+  //   return resp;
+  // }
+  void reload() async {
     licnum = await _sharedPreference.returnValueString(LICENCIA);
     resp = await _sharedPreference.returnValueBoolean(ISLICENCIA);
-    if (resp == null) {
-      resp == false;
-    }
   }
 
-  void _onLoadingLicencia() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    initValue();
-    _refreshController.loadComplete();
+  Future<void> getData() async {
+    // licnum = await _sharedPreference.returnValueString(LICENCIA);
+    // resp = await _sharedPreference.returnValueBoolean(ISLICENCIA);
   }
 
   final ButtonStyle style = ElevatedButton.styleFrom(
       textStyle: const TextStyle(
     fontSize: 20,
   ));
-  @override
-  Widget build(BuildContext context) => Center(
-          child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-        height: 160.0,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(6.0)),
-          color: Colors.grey.shade300,
-        ),
-        child: resp != null
-            ? getResp(resp!)
-            : Center(child: CircularProgressIndicator()),
-      ));
 
-  void _getCartaporte(BuildContext context) async {
-    if (licenciaController!.text != null) {
-      String token = await _sharedPreference.returnValueString(TOKENMOVIL);
-      //String lic = await _sharedPreference.returnValueString(LICENCIA);
-      bool resp = await getCartaporte(token, licenciaController!.text);
-      if (resp == true) {
-        _sharedPreference.saveValueString(licenciaController!.text, LICENCIA);
-        debugPrint("LICENCIAs  VALIDA");
-        _aceptarRegistro();
-        resp = true;
-      } else {
-        debugPrint("LICENCIA NO VALIDA");
-      }
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+          height: 160.0,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(6.0)),
+            color: Colors.grey.shade300,
+          ),
+          child:
+              //  resp == null
+              //     ? Center(
+              //         child: CircularProgressIndicator(),
+              //       )
+              //     : getResp(resp),
+              FutureBuilder(
+            future: getData(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (resp == null) {
+                return Container(
+                  child: Text('Esperando respuesta'),
+                );
+              }
+              return getResp(snapshot.data);
+            },
+          )),
+    );
   }
 
   Widget getResp(bool? res) {
@@ -155,7 +157,7 @@ class _Licencia extends State<Licencia> {
                 _sharedPreference.saveValueBoolean(false, ISLICENCIA);
                 resp = false;
                 Navigator.of(context).pop();
-                Navigator.pushReplacementNamed(context, '/home');
+                //  Navigator.pushReplacementNamed(context, '/home');
               },
               style: TextButton.styleFrom(
                 primary: Colors.red,
@@ -198,7 +200,7 @@ class _Licencia extends State<Licencia> {
                 _sharedPreference.saveValueBoolean(false, ISLICENCIA);
                 resp = false;
                 Navigator.of(context).pop();
-                Navigator.pushReplacementNamed(context, '/home');
+                // Navigator.pushReplacementNamed(context, '/home');
               },
               style: TextButton.styleFrom(
                 primary: Colors.red,
@@ -208,5 +210,21 @@ class _Licencia extends State<Licencia> {
         );
       },
     );
+  }
+
+  void _getCartaporte(BuildContext context) async {
+    if (licenciaController!.text != null) {
+      String token = await _sharedPreference.returnValueString(TOKENMOVIL);
+      //String lic = await _sharedPreference.returnValueString(LICENCIA);
+      bool resp = await getCartaporte(token, licenciaController!.text);
+      if (resp == true) {
+        String response = await _sharedPreference.returnValueString(LICENCIA);
+        debugPrint("LICENCIA  VALIDA");
+        _aceptarRegistro();
+        resp = true;
+      } else {
+        debugPrint("LICENCIA NO VALIDA");
+      }
+    }
   }
 }

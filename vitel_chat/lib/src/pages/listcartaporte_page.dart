@@ -44,11 +44,14 @@ class _ListOperadores extends State<ListOperadores> {
     _refreshController.loadComplete();
   }
 
-  void _getCartaporte() async {
+  Future _getCartaporte() async {
     final SharedPreference _sharedPreference = SharedPreference();
-    String token = await _sharedPreference.returnValueString(TOKENMOVIL);
-    String lic = await _sharedPreference.returnValueString(LICENCIA);
-    bool resp = await _cartaService!.getListCarta(token, lic);
+    bool islic = await _sharedPreference.returnValueBoolean(ISLICENCIA);
+    if (islic == true) {
+      String token = await _sharedPreference.returnValueString(TOKENMOVIL);
+      String lic = await _sharedPreference.returnValueString(LICENCIA);
+      bool resp = await _cartaService!.getListCarta(token, lic);
+    }
   }
 
   @override
@@ -93,9 +96,8 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
   }
 
   void _onRefresh() async {
-    // monitor network fetch
+    _getCartaporte();
     await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
     _getValue();
     _refreshController.refreshCompleted();
   }
@@ -110,6 +112,7 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
   _getValue() async {
     totalcout = await _sharedPreference.returnValueInt(conteo);
     totalcarta = await _sharedPreference.returnValueInt(TOTALCARTA);
+    _onRefresh();
   }
 
   @override
@@ -119,59 +122,62 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
         backgroundColor: kPrimaryColor,
         title: const Text('Carta Porte'),
       ), //AppBar
-      body: Form(
-        key: _formKey,
-        child: Container(
-          padding: const EdgeInsets.only(top: 15, bottom: 15),
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 243, 239, 239),
+      body: totalcarta == null || totalcarta == 0
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Form(
+              key: _formKey,
+              child: Container(
+                padding: const EdgeInsets.only(top: 15, bottom: 15),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 243, 239, 239),
 
-            // border:Color
-          ),
-          child: ListView.separated(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(10),
-            itemCount: totalcout == null ? 0 : totalcout!,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: const FlutterLogo(),
-                trailing: Text('$totalcarta'),
-                title: Text(
-                  '${widget.carta?.data?[index].rfc}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  // border:Color
                 ),
-                subtitle: Text('${widget.carta?.data?[index].nombre}',
-                    style: TextStyle(fontSize: 12)),
-                onTap: () {
-                  //debugPrint('${widget.carta?.data?[index].nombre}');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (ctxt) => SearchCartaPorte(
-                        value: widget.carta!.data![index],
-                        totalcarta: totalcarta!,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(10),
+                  itemCount: totalcout == null ? 0 : totalcout!,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: const FlutterLogo(),
+                      trailing: Text('$totalcarta'),
+                      title: Text(
+                        '${widget.carta?.data?[index].rfc}',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  );
-                },
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const Divider();
-            },
-          ),
-        ),
-      ), // center
+                      subtitle: Text('${widget.carta?.data?[index].nombre}',
+                          style: TextStyle(fontSize: 12)),
+                      onTap: () {
+                        //debugPrint('${widget.carta?.data?[index].nombre}');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctxt) => SearchCartaPorte(
+                              value: widget.carta!.data![index],
+                              totalcarta: totalcarta!,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Divider();
+                  },
+                ),
+              ),
+            ), // center
     );
   }
 
-  @override
-  Widget LoadingP(BuildContext context) {
-    return CircularProgressIndicator(
-      value: _getValue(),
+  Widget _getCartaporte() {
+    return Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:vitel_chat/src/global/constants.dart';
 import 'package:vitel_chat/src/models/response/prueba.dart';
-import 'package:vitel_chat/src/widgets/doublerow_container.dart';
 import 'package:vitel_chat/src/widgets/textbold_container.dart';
 
 class DetailCartaPorte extends StatefulWidget {
@@ -18,7 +16,6 @@ class DetailCartaPorte extends StatefulWidget {
 }
 
 class _DetailCartaPorte extends State<DetailCartaPorte> {
-  final f = new DateFormat('yyyy-MM-dd');
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -92,7 +89,7 @@ class _DetailCartaPorte extends State<DetailCartaPorte> {
                           children: <Widget>[
                             TextBoldContainer(
                               title: "Cliente",
-                              info: '${widget.values?.rfcclienteproovedor} || '
+                              info: '${widget.values?.rfcclienteproovedor} '
                                   '${widget.values?.nombreclienteproovedor}',
                             ),
                             TextBoldContainer(

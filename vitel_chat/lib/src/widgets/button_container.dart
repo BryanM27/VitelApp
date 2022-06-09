@@ -16,11 +16,11 @@ class ButtonContainer extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: SizeConfig.isMobilePortrait
-          ? EdgeInsets.only(top: 25, bottom: 30)
+          ? EdgeInsets.only(top: 10, bottom: 30)
           : EdgeInsets.only(bottom: 15),
       width: size.width * 0.8,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(3),
+        borderRadius: BorderRadius.circular(5),
         child: RaisedButton(
           disabledColor: Colors.amber,
           child: Text(

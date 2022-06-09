@@ -1,12 +1,13 @@
 import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vitel_chat/src/helpers/shared.dart';
 
 // import 'package:app_resources/src/Widgets/ToastCustom.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/models/loginmovil_model.dart';
 import 'package:vitel_chat/src/models/operador_model.dart';
-import 'package:vitel_chat/src/models/response/prueba.dart';
+import 'package:vitel_chat/src/models/response/cartaporterequest_model.dart';
 import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 // import 'package:app_resources/src/models/LoginMovil_model.dart';
@@ -30,6 +31,7 @@ class SearchCartaPorte extends StatefulWidget {
 final _formKey = GlobalKey<FormState>();
 
 class _SearchCartaPorte extends State<SearchCartaPorte> {
+  final prefs = SharedPref.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,10 +61,9 @@ class _SearchCartaPorte extends State<SearchCartaPorte> {
                       ' | '
                       'Estatus: ${widget.value?.cartaporte?[index].estatus}'),
                   onTap: () async {
-                    if (!_formKey.currentState!.validate()) return;
-
-                    _formKey.currentState!.save();
-
+                    //  prefs.dataList = widget.value?.cartaporte?[index].folio;
+                    prefs.idCartaPorte =
+                        widget.value?.cartaporte?[index].idcartaporte;
                     Navigator.push(
                       context,
                       MaterialPageRoute(

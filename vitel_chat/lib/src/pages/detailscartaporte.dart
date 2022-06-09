@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/global/constants.dart';
-import 'package:vitel_chat/src/models/response/prueba.dart';
+import 'package:vitel_chat/src/models/response/cartaporterequest_model.dart';
 import 'package:vitel_chat/src/widgets/doublerow_container.dart';
 import 'package:vitel_chat/src/widgets/textbold_container.dart';
 

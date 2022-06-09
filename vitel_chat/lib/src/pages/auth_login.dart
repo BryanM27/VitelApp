@@ -89,6 +89,15 @@ class _LoginPageState extends State<LoginPage> {
                     suffixIcon2: Icons.visibility_off),
               ),
               // Button Iniciar Sesion
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //     minimumSize: Size.fromHeight(
+              //         50),
+              //         shape: TextField(autocorrect: ,), // fromHeight use double.infinity as width and 40 is the height
+              //   ),
+              //   onPressed: () {},
+              //   child: Text('Iniciar Sesion'),
+              // ),
               ButtonContainer(
                 text: "Iniciar Sesión",
                 onPressed: () {

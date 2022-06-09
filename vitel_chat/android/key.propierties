@@ -1,0 +1,4 @@
+storePassword=vengovoy22
+keyPassword=vengovoy22
+keyAlias=upload
+storeFile=C:/AndroidKey/upload-keystore.jks

@@ -1,4 +1,6 @@
 //import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'dart:async';
+
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 //import 'package:vitel_chat/src/models/response/cartaporte_model.dart';
-import 'package:vitel_chat/src/models/response/prueba.dart';
+import 'package:vitel_chat/src/models/response/cartaporterequest_model.dart';
 import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 import 'package:vitel_chat/src/services/listacarta_service.dart';
@@ -23,26 +25,20 @@ class _ListOperadores extends State<ListOperadores> {
   CartaListService? _cartaService;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+  final responseBool = new StreamController<bool>();
+  final prefs = SharedPref.instance;
 
   @override
   void initState() {
     super.initState();
     _getCartaporte();
+    responseBool.sink.add(true);
   }
 
   void _onRefresh() async {
-    // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
     _getCartaporte();
     _refreshController.refreshCompleted();
-  }
-
-  void _onLoading() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    _refreshController.loadComplete();
   }
 
   Future _getCartaporte() async {
@@ -51,21 +47,38 @@ class _ListOperadores extends State<ListOperadores> {
 
     String? token = await _sharedPreference.returnValueString(TOKENMOVIL);
     String? lic = prefs.licenciaUser!;
-    bool resp = await _cartaService!.getListCarta(token, lic);
+    if (lic != null && token != null && lic != '') {
+      bool resp = await _cartaService!.getListCarta(token, lic);
+      if (resp == true) {
+        responseBool.sink.add(true);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     _cartaService = Provider.of<CartaListService?>(context);
     return SmartRefresher(
-        controller: _refreshController,
-        enablePullDown: true,
-        header: WaterDropHeader(),
-        onLoading: () {},
-        onRefresh: _onRefresh,
-        child: ContainerPortrait(
-          carta: _cartaService?.carta,
-        ));
+      controller: _refreshController,
+      enablePullDown: true,
+      header: WaterDropHeader(),
+      onLoading: () {},
+      onRefresh: _onRefresh,
+      child: StreamBuilder(
+        stream: responseBool.stream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (prefs.validarLicencia == false) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ContainerPortrait(
+            carta: _cartaService?.carta,
+          );
+        },
+      ),
+    );
+    ;
   }
 }
 
@@ -85,6 +98,7 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
   final SharedPreference _sharedPreference = SharedPreference();
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+
   final prefs = SharedPref.instance;
   int? totalcout;
   int? totalcarta;
@@ -96,23 +110,18 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
   }
 
   void _onRefresh() async {
-    _getCartaporte();
     await Future.delayed(Duration(milliseconds: 1000));
     _getValue();
     _refreshController.refreshCompleted();
   }
 
-  void _onLoading() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    _refreshController.loadComplete();
-  }
-
   _getValue() async {
     totalcout = await _sharedPreference.returnValueInt(conteo);
     totalcarta = await _sharedPreference.returnValueInt(TOTALCARTA);
-    _onRefresh();
+    if (totalcout != null &&
+        totalcout != 0 &&
+        totalcarta != null &&
+        totalcarta != 0) {}
   }
 
   @override
@@ -122,62 +131,54 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
         backgroundColor: kPrimaryColor,
         title: const Text('Carta Porte'),
       ), //AppBar
-      body: prefs.dataList == false
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Form(
-              key: _formKey,
-              child: Container(
-                padding: const EdgeInsets.only(top: 15, bottom: 15),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 243, 239, 239),
+      body: Form(
+        key: _formKey,
+        child: Container(
+          padding: const EdgeInsets.only(top: 15, bottom: 15),
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(255, 243, 239, 239),
 
-                  // border:Color
+            // border:Color
+          ),
+          child: ListView.separated(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(10),
+            itemCount: totalcout == null ? 0 : totalcout!,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: const FlutterLogo(),
+                trailing: Text('$totalcarta'),
+                title: Text(
+                  '${widget.carta?.data?[index].rfc}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(10),
-                  itemCount: totalcout == null ? 0 : totalcout!,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: const FlutterLogo(),
-                      trailing: Text('$totalcarta'),
-                      title: Text(
-                        '${widget.carta?.data?[index].rfc}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
+                subtitle: Text('${widget.carta?.data?[index].nombre}',
+                    style: TextStyle(fontSize: 12)),
+                onTap: () {
+                  prefs.idClient = widget.carta?.data?[index].clienteid;
+                  prefs.idEmpresa = widget.carta?.data?[index].idempresa;
+                  //debugPrint('${widget.carta?.data?[index].nombre}');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctxt) => SearchCartaPorte(
+                        value: widget.carta!.data![index],
+                        totalcarta: totalcarta!,
                       ),
-                      subtitle: Text('${widget.carta?.data?[index].nombre}',
-                          style: TextStyle(fontSize: 12)),
-                      onTap: () {
-                        //debugPrint('${widget.carta?.data?[index].nombre}');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (ctxt) => SearchCartaPorte(
-                              value: widget.carta!.data![index],
-                              totalcarta: totalcarta!,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider();
-                  },
-                ),
-              ),
-            ), // center
-    );
-  }
-
-  Widget _getCartaporte() {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
+                    ),
+                  );
+                },
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const Divider();
+            },
+          ),
+        ),
+      ),
+    ); // center
   }
 }

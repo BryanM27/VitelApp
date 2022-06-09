@@ -36,7 +36,7 @@ class DataModel {
   });
 
   factory DataModel.fromJson(Map<String, dynamic> json) => DataModel(
-        idempresa: json['IDCartaPorte'],
+        idempresa: json['IDEmpresa'],
         clienteid: json['ClientID'],
         nombre: json['Nombre'],
         rfc: json['RFC'],
@@ -96,7 +96,7 @@ class CartaModel {
         aseguradora: json['AseguradoraVehiculo'],
         permisovehiculo: json['PermisoVehiculo'],
         polizavehiculo: json['PolizaVehiculo'],
-        fechainicioviaje: DateFormat("dd-MM-yy")
+        fechainicioviaje: DateFormat("dd-MMM-yy")
             .format(DateTime.parse(json['FechaInicioViaje'])),
       );
 }

@@ -1,24 +1,3 @@
-// import 'package:shared_preferences/shared_preferences.dart';
-
-// class SharedPref {
-//   SharedPref._();
-//   static SharedPref _instance = new SharedPref._();
-
-//   static SharedPref get instance => _instance;
-
-//   static SharedPreferences? _prefs;
-
-//   static void init() async {
-//     _prefs = await SharedPreferences.getInstance();
-//   }
-
-//   bool? get validarLicencia => _prefs!.getBool('validarLicencia');
-
-//   set validarLicencia(bool? isvalidate) {
-//     _prefs!.setBool('validarLicencia', isvalidate ?? false);
-//   }
-// }
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPref {
@@ -65,5 +44,24 @@ class SharedPref {
 
   set dataList(bool? isdataList) {
     _prefs!.setBool('dataList', isdataList ?? false);
+  }
+
+  //DOWNLOAD
+  String? get idClient => _prefs!.getString('idClient');
+
+  set idClient(String? IDclient) {
+    _prefs!.setString('idClient', IDclient ?? '');
+  }
+
+  int? get idCartaPorte => _prefs!.getInt('idCartaPorte');
+
+  set idCartaPorte(int? IDCartaPorte) {
+    _prefs!.setInt('idCartaPorte', IDCartaPorte ?? 0);
+  }
+
+  int? get idEmpresa => _prefs!.getInt('idEmpresa');
+
+  set idEmpresa(int? IDempresa) {
+    _prefs!.setInt('idEmpresa', IDempresa ?? 0);
   }
 }

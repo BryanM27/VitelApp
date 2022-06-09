@@ -39,29 +39,24 @@ class _LicenciaValidate extends State<LicenciaValidate> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-          height: 160.0,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(6.0)),
-            color: Colors.grey.shade300,
-          ),
-          child:
-              //  resp == null
-              //     ? Center(
-              //         child: CircularProgressIndicator(),
-              //       )
-              //     : getResp(resp),
-              StreamBuilder(
-            stream: responseBool.stream,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (prefs.validarLicencia == false) {
-                return getFalse();
-              }
-              return getTrue();
-              // return getTrue();
-            },
-          )),
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+        height: 160.0,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(6.0)),
+          color: Colors.grey.shade300,
+        ),
+        child: StreamBuilder(
+          stream: responseBool.stream,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (prefs.validarLicencia == false) {
+              return getFalse();
+            }
+            return getTrue();
+            // return getTrue();
+          },
+        ),
+      ),
     );
   }
 
@@ -135,6 +130,8 @@ class _LicenciaValidate extends State<LicenciaValidate> {
               onPressed: () {
                 prefs.dataList = false;
                 prefs.validarLicencia = false;
+                prefs.licenciaUser = '';
+
                 responseBool.sink.add(false);
                 // _sharedPreference.removeOne(LICENCIA);
                 // _sharedPreference.saveValueBoolean(false, ISLICENCIA);
@@ -193,13 +190,12 @@ class _LicenciaValidate extends State<LicenciaValidate> {
   }
 
   void _getCartaporte(BuildContext context) async {
-    if (licenciaController!.text != null) {
+    if (licenciaController!.text != null && licenciaController!.text != '') {
       String token = await _sharedPreference.returnValueString(TOKENMOVIL);
       //String lic = await _sharedPreference.returnValueString(LICENCIA);
       bool resp = await getCartaporte(token, licenciaController!.text);
       if (resp == true) {
         prefs.validarLicencia = true;
-
         responseBool.sink.add(true);
         debugPrint("LICENCIA  VALIDA");
         _aceptarRegistro();

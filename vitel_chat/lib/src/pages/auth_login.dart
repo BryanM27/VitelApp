@@ -1,6 +1,7 @@
 import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/models/loginmovil_model.dart';
 import 'package:vitel_chat/src/services/auth_service.dart';
@@ -23,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController? emailController;
 
   TextEditingController? passwordController;
+  final prefs = SharedPref.instance;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -30,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     emailController = TextEditingController();
     passwordController = TextEditingController();
+    //emailController?.text = 'hola';
     super.initState();
   }
 
@@ -47,93 +50,84 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Color.fromRGBO(250, 255, 255, 1),
       body: SafeArea(
         child: SingleChildScrollView(
-            child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              // Logos
-              Container(
-                margin: EdgeInsets.symmetric(
-                    vertical: SizeConfig.isMobilePortrait ? 60 : 10),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: Image.asset(
-                        'assets/images/LOGO_Vengo_Voy.png',
-                        height: 120,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                // Logos
+                Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical: SizeConfig.isMobilePortrait ? 60 : 10),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Image.asset(
+                          'assets/images/LOGO_Vengo_Voy.png',
+                          height: 120,
+                        ),
                       ),
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  ),
                 ),
-              ),
-              //Email
-              FractionallySizedBox(
-                widthFactor: 0.8,
-                child: TextFieldContainer(
-                  controller: emailController,
-                  text: "Email",
-                  keyboard: TextInputType.emailAddress,
-                  icon: Icons.alternate_email,
+                //Email
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      FractionallySizedBox(
+                        widthFactor: 0.9,
+                        child: TextFieldContainer(
+                          controller: emailController,
+                          text: "Email",
+                          keyboard: TextInputType.emailAddress,
+                          icon: Icons.alternate_email,
+                        ),
+                      ),
+                      FractionallySizedBox(
+                        widthFactor: 0.9,
+                        child: TextFieldPasswordContainer(
+                            controller: passwordController,
+                            text: "Contraseña",
+                            icon: Icons.vpn_key,
+                            suffixIcon: Icons.visibility,
+                            suffixIcon2: Icons.visibility_off),
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.all(10.0),
+                            child: Row(children: <Widget>[
+                              MyStatefulWidget(),
+                              Text('Recordar usuario')
+                            ]),
+                          )
+                        ],
+                      ),
+                      ButtonContainer(
+                        text: "Iniciar Sesión",
+                        onPressed: () {
+                          _login(context);
+                        },
+                      ),
+                      // Divisor
+                      SizeConfig.isMobilePortrait
+                          ? Divider(
+                              height: 100.0,
+                              color: kPrimaryColor,
+                              thickness: 2.0,
+                              indent: 30.0,
+                              endIndent: 30.0,
+                            )
+                          : Text(""),
+                    ],
+                  ),
                 ),
-              ),
-              //Password
-              FractionallySizedBox(
-                widthFactor: 0.8,
-                child: TextFieldPasswordContainer(
-                    controller: passwordController,
-                    text: "Contraseña",
-                    icon: Icons.vpn_key,
-                    suffixIcon: Icons.visibility,
-                    suffixIcon2: Icons.visibility_off),
-              ),
-              // Button Iniciar Sesion
-              // ElevatedButton(
-              //   style: ElevatedButton.styleFrom(
-              //     minimumSize: Size.fromHeight(
-              //         50),
-              //         shape: TextField(autocorrect: ,), // fromHeight use double.infinity as width and 40 is the height
-              //   ),
-              //   onPressed: () {},
-              //   child: Text('Iniciar Sesion'),
-              // ),
-              ButtonContainer(
-                text: "Iniciar Sesión",
-                onPressed: () {
-                  _login(context);
-                },
-              ),
-              // Divisor
-              SizeConfig.isMobilePortrait
-                  ? Divider(
-                      height: 100.0,
-                      color: kDividerColor,
-                      thickness: 2.0,
-                      indent: 30.0,
-                      endIndent: 30.0,
-                    )
-                  : Text(""),
-              //Recuperar contraseña
-              // Container(
-              //   margin: SizeConfig.isMobilePortrait
-              //       ? EdgeInsets.only(bottom: 50)
-              //       : EdgeInsets.zero,
-              //   child: InkWell(
-              //     onTap: () => Navigator.pushNamed(context, '/password'),
-              //     child: Text(
-              //       "¿Se te olvidó tu contraseña?",
-              //       style: TextStyle(
-              //         color: kTextWhiteColor,
-              //         fontWeight: FontWeight.bold,
-              //         fontSize: 15.0,
-              //       ),
-              //     ),
-              //   ),
-              // )
-            ],
+              ],
+            ),
           ),
-        )),
+        ),
       ),
     );
   }
@@ -160,15 +154,55 @@ class _LoginPageState extends State<LoginPage> {
 
       bool resp = await authProvider!.login(login);
 
-      if (resp) {
+      if (await resp) {
+        prefs.userEmail = emailController!.text;
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacementNamed('/home');
       } else {
+        prefs.rememberUser = false;
         Navigator.pop(context);
         FocusScope.of(context).requestFocus(new FocusNode());
         //ToastCustom().getToastError(context);
       }
       return;
     }
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key}) : super(key: key);
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  bool isChecked = false;
+  final prefs = SharedPref.instance;
+  @override
+  Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.red;
+      }
+      return Colors.blue;
+    }
+
+    return Checkbox(
+      checkColor: Colors.white,
+      fillColor: MaterialStateProperty.resolveWith(getColor),
+      value: isChecked,
+      onChanged: (bool? value) {
+        setState(() {
+          isChecked = value!;
+        });
+        prefs.rememberUser = value;
+      },
+    );
   }
 }

@@ -43,12 +43,16 @@ class CartaListService with ChangeNotifier {
       final decodedData = cartaPruebaToJson(dec);
       decodedData.toString();
       debugPrint("estatus guardado ${response.statusCode}");
-      int totalDatos = decodedData.data!.length;
-      int? totalCarta = decodedData.data?[totalDatos - 1].cartaporte!.length;
+      int? totalEmpresas = decodedData.data!.length;
+      int? totalCartaportes =
+          decodedData.data?[totalEmpresas - 1].cartaporte!.length;
+
+      prefs.totalEmpresas = totalEmpresas;
+      prefs.totalCartaPortes = totalCartaportes;
 
       _sharedPreference.saveValueInt(response.statusCode, ESTATUS);
-      _sharedPreference.saveValueInt(totalDatos, conteo);
-      _sharedPreference.saveValueInt(totalCarta!, TOTALCARTA);
+      _sharedPreference.saveValueInt(totalEmpresas, conteo);
+      _sharedPreference.saveValueInt(totalCartaportes!, TOTALCARTA);
       prefs.dataList == true;
       //_sharedPreference.saveValueBoolean(true, ISLICENCIA);
       carta = decodedData;

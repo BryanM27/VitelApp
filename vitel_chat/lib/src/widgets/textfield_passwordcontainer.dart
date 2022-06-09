@@ -41,7 +41,7 @@ class _TextFieldPasswordContainerState
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          top: 20, bottom: SizeConfig.isMobilePortrait ? 60 : 20),
+          top: 20, bottom: SizeConfig.isMobilePortrait ? 10 : 20),
       child: TextFormField(
           controller: widget.controller,
           onSaved: (value) => _password = value,
@@ -53,7 +53,7 @@ class _TextFieldPasswordContainerState
           },
           obscureText: _obscureText,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(left: 23.0, top: 37.0),
+            contentPadding: EdgeInsets.only(left: 23.0, top: 39.0),
             filled: true,
             fillColor: kTextWhiteColor,
             prefixIcon: Icon(

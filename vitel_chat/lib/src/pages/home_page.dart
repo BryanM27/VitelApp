@@ -7,6 +7,7 @@ import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/pages/licenciavalidate_page.dart';
 import 'package:vitel_chat/src/pages/listcartaporte_page.dart';
+import 'package:vitel_chat/src/pages/listcartaportesbussines_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 import 'package:vitel_chat/src/services/listacarta_service.dart';
 
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
       // case 1:
       //   return RegisterLicense();
       case 1:
-        return ListOperadores();
+        return ListCartaPorteBussines();
       case 2:
         return SearchCartaPorte(
           value: null,
@@ -69,12 +70,14 @@ class _HomePageState extends State<HomePage> {
         Container(
           margin: EdgeInsets.only(left: 10, right: 5),
           child: FlatButton(
-            child: const Text(
-              "Cancelar",
-              style: TextStyle(color: kGrisColor),
-            ),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+              child: const Text(
+                "Cancelar",
+                style: TextStyle(color: kGrisColor),
+              ),
+              onPressed: () {
+                _page = 1;
+                Navigator.of(context).pop();
+              }),
         ),
         Container(
             margin: const EdgeInsets.only(left: 5, right: 10),
@@ -147,19 +150,18 @@ class _HomePageState extends State<HomePage> {
         body: SafeArea(child: _callPage(_page)),
         bottomNavigationBar: CurvedNavigationBar(
           key: bottomNavigationBar,
-          index: _page > 3 ? 0 : _page,
+          index: _page > 2 ? 0 : _page,
           letIndexChange: (value) => true,
           height: 50.0,
           backgroundColor: Color.fromRGBO(1, 55, 89, 35),
           items: const <Widget>[
-            Icon(Icons.home, size: 30),
-            Icon(Icons.list, size: 30),
             Icon(Icons.account_circle, size: 30),
+            Icon(Icons.home, size: 30),
             Icon(Icons.exit_to_app, size: 30),
           ],
           onTap: (index) {
-            if (index != 3) setStatePage(index);
-            if (index == 3) {
+            if (index != 2) setStatePage(index);
+            if (index == 2) {
               showDialog(context: context, builder: (context) => alert);
             }
           },

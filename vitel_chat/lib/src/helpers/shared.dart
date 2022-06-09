@@ -26,6 +26,12 @@ class SharedPref {
     _prefs!.setInt('pageSlect', pageSelected ?? 0);
   }
 
+  bool? get rememberUser => _prefs!.getBool('rememberUser');
+
+  set rememberUser(bool? isrememberUser) {
+    _prefs!.setBool('rememberUser', isrememberUser ?? false);
+  }
+
 //LICENCIA
   bool? get validarLicencia => _prefs!.getBool('validarLicencia');
 
@@ -76,5 +82,18 @@ class SharedPref {
 
   set idEmpresa(int? IDempresa) {
     _prefs!.setInt('idEmpresa', IDempresa ?? 0);
+  }
+
+  //CONTADORES CARTAPORTE
+  int? get totalEmpresas => _prefs!.getInt('totalEmpresas');
+
+  set totalEmpresas(int? TotalEmpresas) {
+    _prefs!.setInt('totalEmpresas', TotalEmpresas ?? 0);
+  }
+
+  int? get totalCartaPortes => _prefs!.getInt('totalCartaPortes');
+
+  set totalCartaPortes(int? TotalCartaPortes) {
+    _prefs!.setInt('totalCartaPortes', TotalCartaPortes ?? 0);
   }
 }

@@ -21,7 +21,7 @@ class ButtonContainer extends StatelessWidget {
       //   color: Color.fromARGB(248, 7, 7, 230)
       // ),
       margin: SizeConfig.isMobilePortrait
-          ? EdgeInsets.only(top: 10, bottom: 30)
+          ? EdgeInsets.only(top: 10, bottom: 40)
           : EdgeInsets.only(bottom: 15),
       width: size.width * 0.8,
       child: ClipRRect(

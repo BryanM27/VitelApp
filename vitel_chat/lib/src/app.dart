@@ -2,6 +2,7 @@ import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/pages/auth_login.dart';
 import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/home_page.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+final prefs = SharedPref.instance;
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 class _MyAppState extends State<MyApp> {
@@ -26,6 +28,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    // prefs.firstLogin = true;
     // final pushProvider = new PushNotificationsService();
     // pushProvider.initNotifications();
 

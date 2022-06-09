@@ -1,3 +1,4 @@
+import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   final SharedPreference _sharedPreference = SharedPreference();
-
+  final prefs = SharedPref.instance;
   @override
   void initState() {
     super.initState();
@@ -25,6 +26,7 @@ class _LandingPageState extends State<LandingPage> {
         Navigator.pushNamedAndRemoveUntil(
             context, '/login', ModalRoute.withName('/login'));
       } else {
+        prefs.firstLogin = true;
         Navigator.pushNamedAndRemoveUntil(
             context, '/home', ModalRoute.withName('/home'));
       }
@@ -40,7 +42,7 @@ class _LandingPageState extends State<LandingPage> {
         child: Padding(
           padding: EdgeInsets.all(12.0),
           child: CircularProgressIndicator(
-            backgroundColor: Colors.white38,
+            backgroundColor: Color.fromARGB(29, 161, 242, 95),
             valueColor: AlwaysStoppedAnimation(Colors.white),
           ),
         ),

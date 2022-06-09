@@ -47,9 +47,9 @@ class _ListOperadores extends State<ListOperadores> {
 
     String? token = await _sharedPreference.returnValueString(TOKENMOVIL);
     String? lic = prefs.licenciaUser!;
-    if (lic != null && token != null && lic != '') {
-      bool resp = await _cartaService!.getListCarta(token, lic);
-      if (resp == true) {
+    if (await token != null && await lic != '') {
+      Future<bool> resp = _cartaService!.getListCarta(token, lic);
+      if (await resp == true) {
         responseBool.sink.add(true);
       }
     }
@@ -111,14 +111,14 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
 
   void _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 1000));
-    _getValue();
+    await _getValue();
     _refreshController.refreshCompleted();
   }
 
   _getValue() async {
     totalcout = await _sharedPreference.returnValueInt(conteo);
     totalcarta = await _sharedPreference.returnValueInt(TOTALCARTA);
-    if (totalcout != null &&
+    if (await totalcout != null &&
         totalcout != 0 &&
         totalcarta != null &&
         totalcarta != 0) {}

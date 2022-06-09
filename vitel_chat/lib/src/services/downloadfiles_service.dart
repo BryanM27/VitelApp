@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:external_path/external_path.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:open_file/open_file.dart';
 import 'package:vitel_chat/src/global/constants.dart';
 import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:http/http.dart' as http;
@@ -67,6 +68,9 @@ Future<String> _createFileFromString(
   await file.create(recursive: true);
   // Uint8List bytesfile = await file.readAsBytes();
   // await file.writeAsBytes(bytesfile);
+  if (await file.path != null || await file.path != "") {
+    OpenFile.open(file.path);
+  }
   return file.path;
 }
 

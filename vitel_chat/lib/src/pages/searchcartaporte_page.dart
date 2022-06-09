@@ -54,7 +54,7 @@ class _SearchCartaPorte extends State<SearchCartaPorte> {
                 return ListTile(
                   trailing: Text(
                       '${widget.value?.cartaporte?[index].fechainicioviaje}'),
-                  leading: const FlutterLogo(),
+                  leading: Icon(Icons.attach_file_rounded),
                   title: Text(
                       '${widget.value?.cartaporte?[index].folio} - ${widget.value?.cartaporte?[index].rfcclienteproovedor} ${widget.value?.cartaporte?[index].nombreclienteproovedor} '),
                   subtitle: Text('tipo  N/A '

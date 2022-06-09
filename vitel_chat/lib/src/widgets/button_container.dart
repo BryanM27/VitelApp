@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +17,9 @@ class ButtonContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
+      // decoration: BoxDecoration(
+      //   color: Color.fromARGB(248, 7, 7, 230)
+      // ),
       margin: SizeConfig.isMobilePortrait
           ? EdgeInsets.only(top: 10, bottom: 30)
           : EdgeInsets.only(bottom: 15),
@@ -22,14 +27,17 @@ class ButtonContainer extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(5),
         child: RaisedButton(
+          padding: const EdgeInsets.all(20),
           disabledColor: Colors.amber,
           child: Text(
             text!,
-            style:
-                TextStyle(color: colortext == null ? kPrimaryColor : colortext),
+            style: TextStyle(
+                color: colortext == null
+                    ? Color.fromARGB(255, 255, 255, 255)
+                    : colortext),
           ),
-          splashColor: Colors.amber,
-          color: Colors.white,
+          splashColor: Color.fromARGB(26, 43, 217, 85),
+          color: kPrimaryColor,
           onPressed: () {
             onPressed!();
           },

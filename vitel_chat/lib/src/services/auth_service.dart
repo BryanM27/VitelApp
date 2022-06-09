@@ -51,7 +51,7 @@ class AuthService with ChangeNotifier {
     }
     _sharedPreference.saveValueString(decodedData.accesstoken!, TOKENMOVIL);
     _sharedPreference.saveValueBoolean(true, LOGGEDIN);
-
+    prefs.firstLogin = true;
     if (prefs.userEmail != '' && prefs.userEmail != login.email) {
       prefs.userEmail = login.email;
       prefs.validarLicencia = false;

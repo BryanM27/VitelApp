@@ -31,6 +31,11 @@ class _HomePageState extends State<HomePage> {
   GlobalKey bottomNavigationBar = GlobalKey();
 
   Widget _callPage(int actuallyPage) {
+    if (prefs.licenciaUser != '' && prefs.firstLogin == true) {
+      actuallyPage = 1;
+      prefs.firstLogin = false;
+      _page = 1;
+    }
     switch (actuallyPage) {
       case 0:
         return LicenciaValidate();

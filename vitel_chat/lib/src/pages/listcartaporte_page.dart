@@ -128,9 +128,20 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        title: const Text('Carta Porte'),
-      ), //AppBar
+          backgroundColor: kPrimaryColor,
+          title: Center(
+            child: Row(children: <Widget>[
+              Expanded(
+                child: Align(
+                    alignment: Alignment.topLeft, child: Text("CartaPorte")),
+              ),
+              Expanded(
+                child: Align(
+                    alignment: Alignment.topRight,
+                    child: Text('${prefs.licenciaUser}')),
+              ),
+            ]),
+          )), //AppBar
       body: Form(
         key: _formKey,
         child: Container(
@@ -146,7 +157,7 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
             itemCount: totalcout == null ? 0 : totalcout!,
             itemBuilder: (context, index) {
               return ListTile(
-                leading: const FlutterLogo(),
+                leading: Icon(Icons.add_business_rounded),
                 trailing: Text('$totalcarta'),
                 title: Text(
                   '${widget.carta?.data?[index].rfc}',

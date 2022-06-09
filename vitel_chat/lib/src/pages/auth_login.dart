@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     //  authProvider = Provider.of<AuthService>( context );
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Color.fromRGBO(250, 255, 255, 1),
       body: SafeArea(
         child: SingleChildScrollView(
             child: Form(

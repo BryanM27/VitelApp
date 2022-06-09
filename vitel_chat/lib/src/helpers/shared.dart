@@ -13,6 +13,19 @@ class SharedPref {
     _prefs = await SharedPreferences.getInstance();
   }
 
+//Login
+  bool? get firstLogin => _prefs!.getBool('firstLogin');
+
+  set firstLogin(bool? isfirstLogin) {
+    _prefs!.setBool('firstLogin', isfirstLogin ?? false);
+  }
+
+  int? get pageSelect => _prefs!.getInt('pageSelect');
+
+  set pageSelect(int? pageSelected) {
+    _prefs!.setInt('pageSlect', pageSelected ?? 0);
+  }
+
 //LICENCIA
   bool? get validarLicencia => _prefs!.getBool('validarLicencia');
 
@@ -23,7 +36,7 @@ class SharedPref {
   String? get licenciaUser => _prefs!.getString('licenciaUser');
 
   set licenciaUser(String? islicenciaUser) {
-    _prefs!.setString('licenciaUser', islicenciaUser ?? 'NO HAY INFORMACION');
+    _prefs!.setString('licenciaUser', islicenciaUser ?? '');
   }
 
   // TOKEN

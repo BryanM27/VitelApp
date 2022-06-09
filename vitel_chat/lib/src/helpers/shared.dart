@@ -38,6 +38,12 @@ class SharedPref {
     _prefs!.setString('dateEndToken', DateEndToken ?? '');
   }
 
+  bool? get logged => _prefs!.getBool('logged');
+
+  set logged(bool? islogged) {
+    _prefs!.setBool('logged', islogged ?? false);
+  }
+
 //LICENCIA
   bool? get validarLicencia => _prefs!.getBool('validarLicencia');
 

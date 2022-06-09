@@ -1,3 +1,4 @@
+import 'package:vitel_chat/src/helpers/deletePreferences.dart';
 import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   final SharedPreference _sharedPreference = SharedPreference();
   final prefs = SharedPref.instance;
+
   @override
   void initState() {
     super.initState();
@@ -22,13 +24,24 @@ class _LandingPageState extends State<LandingPage> {
 
   _loadUserInfo() async {
     _sharedPreference.returnValueBoolean(LOGGEDIN).then((value) {
-      if (value == false) {
+      if (value == false || prefs.logged == null) {
         Navigator.pushNamedAndRemoveUntil(
             context, '/login', ModalRoute.withName('/login'));
       } else {
-        prefs.firstLogin = true;
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/home', ModalRoute.withName('/home'));
+        if (prefs.dateEndToken != null || prefs.dateEndToken != '') {
+          DateTime end = DateTime.parse(prefs.dateEndToken!);
+          DateTime ahora = DateTime.now();
+          if (end.compareTo(ahora) < 0) {
+            print("TOKEN expiro");
+            DeletePreferences();
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/login', ModalRoute.withName('/login'));
+          }
+
+          prefs.firstLogin = true;
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/home', ModalRoute.withName('/home'));
+        }
       }
     });
   }

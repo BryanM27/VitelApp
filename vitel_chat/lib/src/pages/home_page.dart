@@ -3,6 +3,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:vitel_chat/src/app.dart';
+import 'package:vitel_chat/src/helpers/deletePreferences.dart';
 import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/pages/licenciavalidate_page.dart';
@@ -85,14 +86,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: kRojoColor),
               ),
               onPressed: () async {
-                _sharedPreference.removeOne(ISLICENCIA);
-                _sharedPreference.removeOne(TOKENMOVIL);
-                _sharedPreference.removeOne(LICENCIA);
-                _sharedPreference.removeOne(LOGGEDIN);
-                _sharedPreference.removeOne(USERSTATUS);
-                _sharedPreference.removeOne(ESTATUS);
-                prefs.dataList = false;
-
+                DeletePreferences();
                 Navigator.pushReplacementNamed(context, '/');
               },
             ))
@@ -111,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                         topLeft: Radius.circular(4.0),
                         topRight: Radius.circular(4.0))),
                 child: const Text(
-                  "Cerrar sesion",
+                  "Cerrar sesión",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
@@ -122,7 +116,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 margin: const EdgeInsets.only(top: 20, right: 15, left: 15),
                 child: const Text(
-                  "¿Esta seguro que desea cerrar la sesion?",
+                  "¿Esta seguro que desea cerrar la sesión?",
                   textAlign: TextAlign.justify,
                   style: TextStyle(fontWeight: FontWeight.w300, fontSize: 18.0),
                 ),

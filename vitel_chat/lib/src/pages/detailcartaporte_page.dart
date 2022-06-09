@@ -206,7 +206,7 @@ class _DetailCartaPorte extends State<DetailCartaPorte> {
                                       child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: TextBoldContainer(
-                                          title: "Numero Permiso",
+                                          title: "Número Permiso",
                                           info:
                                               "${widget.values?.permisovehiculo != "" ? widget.values?.permisovehiculo : "No hay información."}",
                                           // info: "${user!.cellphone != "" ? user!.cellphone : "No hay información."}", EJEMPLO MAPEO
@@ -260,7 +260,7 @@ class _DetailCartaPorte extends State<DetailCartaPorte> {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('Se ha realizado la descarga con exito!'),
+                Text('¡Se ha realizado la descarga con éxito!'),
               ],
             ),
           ),

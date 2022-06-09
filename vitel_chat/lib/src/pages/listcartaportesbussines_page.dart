@@ -25,11 +25,19 @@ class _ListCartaPorteBussines extends State<ListCartaPorteBussines> {
   final _formKey = GlobalKey<FormState>();
   final prefs = SharedPref.instance;
   CartaListService? _cartaService;
+  @override
+  void initState() {
+    super.initState();
+    _getFirstData();
+  }
 
   Future<bool> _getFirstData() async {
     String? token = prefs.tokenMovil;
     String? licnumber = prefs.licenciaUser;
-    Future<bool> resp = _cartaService!.getListCarta(token!, licnumber!);
+    if (token == null || licnumber == null || licnumber == "") {
+      return false;
+    }
+    bool resp = await _cartaService!.getListCarta(token, licnumber);
     if (await resp) {
       return true;
     }
@@ -61,7 +69,7 @@ class _ListCartaPorteBussines extends State<ListCartaPorteBussines> {
       body: FutureBuilder(
         future: _getFirstData(),
         builder: (_, AsyncSnapshot snapshot) {
-          return snapshot.data == false
+          return snapshot.data == false || snapshot.data == null
               ? Center(
                   child: CircularProgressIndicator(),
                 )

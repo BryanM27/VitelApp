@@ -6,14 +6,12 @@ import 'package:vitel_chat/src/app.dart';
 import 'package:vitel_chat/src/helpers/shared.dart';
 import 'package:vitel_chat/src/helpers/shared_preferences.dart';
 import 'package:vitel_chat/src/pages/licenciavalidate_page.dart';
-import 'package:vitel_chat/src/pages/listcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/listcartaportesbussines_page.dart';
 import 'package:vitel_chat/src/pages/searchcartaporte_page.dart';
 import 'package:vitel_chat/src/services/listacarta_service.dart';
 
 import '../global/constants.dart';
 import '../global/size_config.dart';
-import '../widgets/button_container.dart';
 
 class HomePage extends StatefulWidget {
   @override

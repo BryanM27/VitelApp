@@ -32,6 +32,12 @@ class SharedPref {
     _prefs!.setBool('rememberUser', isrememberUser ?? false);
   }
 
+  String? get dateEndToken => _prefs!.getString('dateEndToken');
+
+  set dateEndToken(String? DateEndToken) {
+    _prefs!.setString('dateEndToken', DateEndToken ?? '');
+  }
+
 //LICENCIA
   bool? get validarLicencia => _prefs!.getBool('validarLicencia');
 

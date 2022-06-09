@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 ResponseAuth responseAuthJson(String str) =>
     ResponseAuth.fromJson(json.decode(str));
 

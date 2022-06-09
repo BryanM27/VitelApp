@@ -100,13 +100,13 @@ class _LoginPageState extends State<LoginPage> {
                             margin: const EdgeInsets.all(10.0),
                             child: Row(children: <Widget>[
                               MyStatefulWidget(),
-                              Text('Recordar usuario')
+                              Text('Recordar correo')
                             ]),
                           )
                         ],
                       ),
                       ButtonContainer(
-                        text: "Iniciar Sesión",
+                        text: "Iniciar sesión",
                         onPressed: () {
                           _login(context);
                         },

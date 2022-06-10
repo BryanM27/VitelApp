@@ -160,7 +160,7 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
                 leading: Icon(Icons.add_business_rounded),
                 trailing: Text('$totalcarta'),
                 title: Text(
-                  '${widget.carta?.data?[index].rfc}',
+                  '${widget.carta?.data?[index].rfc} aaaaaaaaaaa',
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -169,8 +169,6 @@ class _ContainerPortraitState extends State<ContainerPortrait> {
                 subtitle: Text('${widget.carta?.data?[index].nombre}',
                     style: TextStyle(fontSize: 12)),
                 onTap: () {
-                  prefs.idClient = widget.carta?.data?[index].clienteid;
-                  prefs.idEmpresa = widget.carta?.data?[index].idempresa;
                   //debugPrint('${widget.carta?.data?[index].nombre}');
                   Navigator.push(
                     context,

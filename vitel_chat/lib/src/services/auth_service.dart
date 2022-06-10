@@ -63,7 +63,7 @@ class AuthService with ChangeNotifier {
       prefs.userEmail = login.email;
       prefs.validarLicencia = false;
       prefs.dataList = true;
-      prefs.licenciaUser = 'NO HAY INFORMACION';
+      prefs.licenciaUser = '';
       prefs.tokenMovil = decodedData.accesstoken!;
       notifyListeners();
       return true;

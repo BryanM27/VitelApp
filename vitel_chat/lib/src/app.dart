@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:vitel_chat/src/helpers/shared.dart';
+import 'package:vitel_chat/src/pages/auth/login_page.dart';
 import 'package:vitel_chat/src/pages/auth_login.dart';
 import 'package:vitel_chat/src/pages/detailcartaporte_page.dart';
 import 'package:vitel_chat/src/pages/home_page.dart';
@@ -60,7 +61,7 @@ class _MyAppState extends State<MyApp> {
               debugShowCheckedModeBanner: false,
               routes: {
                 '/': (BuildContext context) => LandingPage(),
-                '/login': (BuildContext context) => LoginPage(),
+                '/login': (BuildContext context) => LoginAuthPage(),
                 '/home': (BuildContext context) => HomePage(),
                 // '/details': (BuildContext context) => SearchCartaPorte(),
                 //carta': (BuildContext context) => DetailCartaPorte(),

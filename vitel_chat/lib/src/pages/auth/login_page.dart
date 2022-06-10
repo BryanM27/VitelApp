@@ -1,4 +1,5 @@
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vitel_chat/src/global/constants.dart';
 import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,14 +11,12 @@ import 'package:vitel_chat/src/widgets/button_container.dart';
 import 'package:vitel_chat/src/widgets/textfield_passwordcontainer.dart';
 import 'package:vitel_chat/src/widgets/textfield_container.dart';
 
-import '../global/constants.dart';
-
-class LoginPage extends StatefulWidget {
+class LoginAuthPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginAuthPage> {
   AuthService? authProvider = AuthService();
 
   final SharedPreference _sharedPreference = SharedPreference();
@@ -48,86 +47,98 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     //  authProvider = Provider.of<AuthService>( context );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(250, 255, 255, 1),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: Column(
-              children: <Widget>[
-                // Logos
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: SizeConfig.isMobilePortrait ? 20 : 10,
+            child: Container(
+              padding: EdgeInsets.all(20),
+              width: MediaQuery.of(context).size.width,
+              decoration:
+                  BoxDecoration(color: Color.fromARGB(255, 255, 255, 255)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 15,
                   ),
-                  // padding: EdgeInsets.all(20),
-                  child: Column(
-                    children: <Widget>[
-                      Center(
-                        //margin: EdgeInsets.only(right: 5),
-                        child: Image.asset(
-                          'assets/images/LOGO_Vengo_Voy.png',
-                          height: 120,
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                      vertical: SizeConfig.isMobilePortrait ? 40 : 10,
+                    ),
+                    // padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: <Widget>[
+                        Center(
+                          //margin: EdgeInsets.only(right: 5),
+                          child: Image.asset(
+                            'assets/images/LOGO_Vengo_Voy.png',
+                            height: 120,
+                          ),
                         ),
-                      ),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ),
                   ),
-                ),
-                //Email
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      FractionallySizedBox(
-                        widthFactor: 0.9,
-                        child: TextFieldContainer(
-                          controller: emailController,
-                          text: "Email",
-                          keyboard: TextInputType.emailAddress,
-                          icon: Icons.alternate_email,
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        FractionallySizedBox(
+                          widthFactor: 0.9,
+                          child: TextFieldContainer(
+                            controller: emailController,
+                            text: "Email",
+                            keyboard: TextInputType.emailAddress,
+                            icon: Icons.alternate_email,
+                          ),
                         ),
-                      ),
-                      FractionallySizedBox(
-                        widthFactor: 0.9,
-                        child: TextFieldPasswordContainer(
-                            controller: passwordController,
-                            text: "Contraseña",
-                            icon: Icons.vpn_key,
-                            suffixIcon: Icons.visibility,
-                            suffixIcon2: Icons.visibility_off),
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(10.0),
-                            child: Row(children: <Widget>[
-                              MyStatefulWidget(),
-                              Text('Recordar usuario')
-                            ]),
-                          )
-                        ],
-                      ),
-                      ButtonContainer(
-                        text: "Iniciar sesión",
-                        onPressed: () {
-                          _login(context);
-                        },
-                      ),
-                      // Divisor
-                      SizeConfig.isMobilePortrait
-                          ? Divider(
-                              height: 100.0,
-                              color: kPrimaryColor,
-                              thickness: 2.0,
-                              indent: 30.0,
-                              endIndent: 30.0,
+                        FractionallySizedBox(
+                          widthFactor: 0.9,
+                          child: TextFieldPasswordContainer(
+                              controller: passwordController,
+                              text: "Contraseña",
+                              icon: Icons.vpn_key,
+                              suffixIcon: Icons.visibility,
+                              suffixIcon2: Icons.visibility_off),
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.all(10.0),
+                              child: Row(children: <Widget>[
+                                MyStatefulWidget(),
+                                Text('Recordar usuario')
+                              ]),
                             )
-                          : Text(""),
-                    ],
+                          ],
+                        ),
+                        ButtonContainer(
+                          text: "Iniciar sesión",
+                          onPressed: () {
+                            _login(context);
+                          },
+                        ),
+                        SizeConfig.isMobilePortrait
+                            ? Divider(
+                                height: 100.0,
+                                color: kPrimaryColor,
+                                thickness: 2.0,
+                                indent: 20.0,
+                                endIndent: 20.0,
+                              )
+                            : Text(""),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  // Divisor
+                ],
+              ),
             ),
           ),
         ),

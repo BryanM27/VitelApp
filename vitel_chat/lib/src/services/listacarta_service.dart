@@ -59,7 +59,7 @@ class CartaListService with ChangeNotifier {
       //_sharedPreference.saveValueBoolean(true, ISLICENCIA);
       carta = decodedData;
       prefs.validarLicencia = true;
-
+      prefs.dataList = false;
       return true;
     }
     prefs.validarLicencia = false;

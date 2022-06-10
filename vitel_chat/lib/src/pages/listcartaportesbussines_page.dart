@@ -34,13 +34,16 @@ class _ListCartaPorteBussines extends State<ListCartaPorteBussines> {
   Future<bool> _getFirstData() async {
     String? token = prefs.tokenMovil;
     String? licnumber = prefs.licenciaUser;
-    if (token == null || licnumber == null || licnumber == "") {
+    if (await token == null ||
+        await licnumber == null ||
+        await licnumber == "") {
       return false;
     }
-    bool resp = await _cartaService!.getListCarta(token, licnumber);
+    bool resp = await _cartaService!.getListCarta(token!, licnumber!);
     if (await resp) {
       return true;
     }
+
     return false;
   }
 

@@ -1,6 +1,6 @@
 import 'package:vitel_chat/src/global/size_config.dart';
 import 'package:flutter/material.dart';
-
+import 'package:vitel_chat/src/helpers/shared.dart';
 import '../global/constants.dart';
 
 class TextFieldPasswordContainer extends StatefulWidget {
@@ -27,8 +27,8 @@ class _TextFieldPasswordContainerState
     extends State<TextFieldPasswordContainer> {
   // Initially password is obscure
   bool _obscureText = true;
-
   String? _password;
+  final prefs = SharedPref.instance;
 
   // Toggles the password show status
   void _toggle() {
@@ -39,6 +39,9 @@ class _TextFieldPasswordContainerState
 
   @override
   Widget build(BuildContext context) {
+    if (prefs.rememberUser == true) {
+      widget.controller?.text = prefs.rememberPassword!;
+    }
     return Container(
       margin: EdgeInsets.only(
           top: 20, bottom: SizeConfig.isMobilePortrait ? 10 : 20),
@@ -53,7 +56,7 @@ class _TextFieldPasswordContainerState
           },
           obscureText: _obscureText,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(left: 23.0, top: 39.0),
+            contentPadding: EdgeInsets.only(left: 23.0, top: 38.0),
             filled: true,
             fillColor: kTextWhiteColor,
             prefixIcon: Icon(

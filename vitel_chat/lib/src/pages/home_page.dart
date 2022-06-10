@@ -31,10 +31,16 @@ class _HomePageState extends State<HomePage> {
   GlobalKey bottomNavigationBar = GlobalKey();
 
   Widget _callPage(int actuallyPage) {
+    // evalua cuando inicias la primera vez
     if (prefs.licenciaUser != '' && prefs.firstLogin == true) {
       actuallyPage = 1;
       prefs.firstLogin = false;
       _page = 1;
+    }
+    // evalua el cambio de pantallas
+    if (prefs.licenciaUser == '') {
+      actuallyPage = 0;
+      _page = 0;
     }
     switch (actuallyPage) {
       case 0:
@@ -43,11 +49,6 @@ class _HomePageState extends State<HomePage> {
       //   return RegisterLicense();
       case 1:
         return ListCartaPorteBussines();
-      case 2:
-        return SearchCartaPorte(
-          value: null,
-          totalcarta: 0,
-        );
       // case 3:
       //   return SearchCartaPorte();
       default:

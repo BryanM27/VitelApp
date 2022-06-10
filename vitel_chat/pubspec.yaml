@@ -46,6 +46,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   external_path: ^1.0.1
   open_file: ^3.2.1
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:vitel_chat/src/global/constants.dart';
 import 'package:vitel_chat/src/helpers/shared.dart';
@@ -86,7 +87,7 @@ class _DetailCartaPorte extends State<DetailCartaPorte> {
                                           clientid, idcarta, idempres, tokenm);
 
                                       if (await isDownload) {
-                                        _showMyDialog();
+                                        showToasDownload();
                                       }
                                     },
                                     child: CircleAvatar(
@@ -110,7 +111,7 @@ class _DetailCartaPorte extends State<DetailCartaPorte> {
                                       Future<bool> isDownload = downloadPDF(
                                           clientid, idcarta, idempres, tokenm);
                                       if (await isDownload) {
-                                        _showMyDialog();
+                                        showToasDownload();
                                       }
                                     },
                                     child: CircleAvatar(
@@ -248,6 +249,15 @@ class _DetailCartaPorte extends State<DetailCartaPorte> {
         ),
       ),
     );
+  }
+
+  void showToasDownload() {
+    Fluttertoast.showToast(
+        msg: "¡Descarga exitosa!", // message
+        toastLength: Toast.LENGTH_SHORT, // length
+        gravity: ToastGravity.CENTER, // location
+        timeInSecForIosWeb: 1 // duration
+        );
   }
 
   Future<void> _showMyDialog() async {

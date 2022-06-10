@@ -58,7 +58,7 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
             onSaved: (value) => _valorGeneral = value,
             style: TextStyle(fontSize: 18.0, color: Colors.black),
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 23.0, top: 37.0),
+              contentPadding: EdgeInsets.only(left: 23.0, top: 38.0),
               filled: true,
               fillColor: kTextWhiteColor,
               prefixIcon: Icon(

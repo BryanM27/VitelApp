@@ -44,6 +44,12 @@ class SharedPref {
     _prefs!.setBool('logged', islogged ?? false);
   }
 
+  String? get rememberPassword => _prefs!.getString('rememberPassword');
+
+  set rememberPassword(String? RememberPassword) {
+    _prefs!.setString('rememberPassword', RememberPassword ?? '');
+  }
+
 //LICENCIA
   bool? get validarLicencia => _prefs!.getBool('validarLicencia');
 
